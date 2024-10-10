@@ -1,0 +1,4 @@
+.idea
+/frontend/node_modules
+/backend/src/main/resources/static/
+.DS_Store
