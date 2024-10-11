@@ -9,7 +9,7 @@ function App() {
 	const [email, setEmail] = useState<string>('')
 	const [quantitySmoked, setQuantitySmoked] = useState<number>(0)
 	const [quantityFresh, setQuantityFresh] = useState<number>(0)
-	console.log("quantitySmoked: ", quantitySmoked);
+	const [responseMessage, setResponseMessage] = useState<string>('');
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		const order = {
@@ -19,11 +19,10 @@ function App() {
 			quantitySmoked,
 			quantityFresh
 		}
-		postOrder(order);
-		e.currentTarget.reset();
+		postOrder(order,e);
+
 	}
-	const postOrder = (order: Order): void => {
-		console.log("order: ", order);
+	const postOrder = (order: Order , e: React.FormEvent<HTMLFormElement>): void => {
 		axios.post('/api/orders', {
 			firstname: order.firstname,
 			lastname: order.lastname,
@@ -32,15 +31,18 @@ function App() {
 			quantityFresh: order.quantityFresh,
 		})
 			.then(response => {
-				console.log(response);
+				console.log('response: ',response);
 				setFirstname('');
 				setLastname('');
 				setEmail('');
 				setQuantitySmoked(0);
 				setQuantityFresh(0);
+				e.currentTarget?.reset();
+				setResponseMessage('Bestellung war erfolgreich!\n Sie erhalten eine Bestätigung per E-Mail.');
 			})
 			.catch(error => {
 				console.error(error);
+				setResponseMessage('Bestellung fehlgeschlagen!');
 			});
 	}
 	return (
@@ -81,6 +83,7 @@ function App() {
 				</div>
 				<button type="submit">Bestellen</button>
 			</form>
+			{responseMessage && <p>{responseMessage}</p>}
 		</>
 	)
 }
