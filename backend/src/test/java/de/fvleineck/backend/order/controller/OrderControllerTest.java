@@ -1,6 +1,6 @@
 package de.fvleineck.backend.order.controller;
 
-import de.fvleineck.backend.order.repository.OrderRepository;
+import de.fvleineck.backend.BackendApplication;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -12,17 +12,15 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 
-@SpringBootTest
+@SpringBootTest(classes = BackendApplication.class)
 @AutoConfigureMockMvc
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class OrderControllerTest {
 
 	@Autowired
 	private MockMvc mvc;
 
-	@Autowired
-	OrderRepository orderRepository;
 
-	@DirtiesContext
 	@Test
 	void createOrder () throws Exception {
 		mvc.perform(MockMvcRequestBuilders.post("/api/orders")
@@ -50,7 +48,6 @@ class OrderControllerTest {
 						"""));
 	}
 
-	@DirtiesContext
 	@Test
 	void getAllOrders () throws Exception {
 		mvc.perform(MockMvcRequestBuilders.get("/api/orders"))
@@ -58,9 +55,24 @@ class OrderControllerTest {
 				.andExpect(MockMvcResultMatchers.content().json("[]"));
 	}
 
-	@DirtiesContext
 	@Test
-	void deleteOrder () throws Exception {
+	void deleteOrder() throws Exception {
+		// Create a new order before deleting
+		mvc.perform(MockMvcRequestBuilders.post("/api/orders")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content("""
+                    {
+                        "id": "1",
+                        "lastname": "Mustermann",
+                        "firstname": "Max",
+                        "email": "fabian@doez.info",
+                        "quantitySmoked": 1,
+                        "quantityFresh": 2
+                     }
+            """))
+				.andExpect(MockMvcResultMatchers.status().isOk());
+
+		// Now delete the order
 		mvc.perform(MockMvcRequestBuilders.delete("/api/orders/1"))
 				.andExpect(MockMvcResultMatchers.status().isOk());
 	}

@@ -11,13 +11,15 @@ import static org.mockito.Mockito.*;
 class OrderServiceTest {
 
 	private final OrderRepository mockOrderRepository = mock(OrderRepository.class);
+	private final EmailService mockEmailService = mock(EmailService.class);
 
 	@Test
 	void testCreateOrder() {
 		Order order = new Order("1", "lastname", "firstname", "email", 1, 1);
 		when(mockOrderRepository.save(order)).thenReturn(order);
 
-		OrderService orderService = new OrderService(mockOrderRepository);
+		OrderService orderService = new OrderService(mockOrderRepository,mockEmailService);
+
 
 		Order actual = orderService.createOrder(order);
 
@@ -30,7 +32,7 @@ class OrderServiceTest {
 		Order order = new Order("1", "lastname", "firstname", "email", 1, 1);
 		when(mockOrderRepository.findAll()).thenReturn(java.util.List.of(order));
 
-		OrderService orderService = new OrderService(mockOrderRepository);
+		OrderService orderService = new OrderService(mockOrderRepository,mockEmailService);
 
 		java.util.List<Order> actual = orderService.getAllOrders();
 
@@ -40,7 +42,7 @@ class OrderServiceTest {
 
 	@Test
 	void testDeleteOrder() {
-		OrderService orderService = new OrderService(mockOrderRepository);
+		OrderService orderService = new OrderService(mockOrderRepository,mockEmailService);
 
 		orderService.deleteOrder("1");
 
