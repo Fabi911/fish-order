@@ -4,6 +4,7 @@ package de.fvleineck.backend.order.controller;
 import de.fvleineck.backend.order.model.Order;
 import de.fvleineck.backend.order.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,8 +19,9 @@ public class OrderController {
 	// @PostMapping
 
 	@PostMapping()
-	public Order createOrder(@RequestBody Order newOrder) {
-		return orderService.createOrder(newOrder);
+	public ResponseEntity<Order> createOrder(@RequestBody Order order) {
+		Order savedOrder = orderService.createOrder(order);
+		return ResponseEntity.ok(savedOrder);
 	}
 
 	@GetMapping()
