@@ -18,8 +18,8 @@ public class OrderController {
 	// @PostMapping
 
 	@PostMapping()
-	public Order createOrder(@RequestBody Order order) {
-		return orderService.createOrder(order);
+	public Order createOrder(@RequestBody Order newOrder) {
+		return orderService.createOrder(newOrder);
 	}
 
 	@GetMapping()

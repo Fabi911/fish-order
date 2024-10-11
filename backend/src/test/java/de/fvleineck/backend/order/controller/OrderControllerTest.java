@@ -33,8 +33,8 @@ class OrderControllerTest {
 							"lastname": "Mustermann",
 							"firstname": "Max",
 							"email": "fabian@doez.info",
-							"quantity_smoked": 1,
-							"quantity_fresh": 2
+							"quantitySmoked": 1,
+							"quantityFresh": 2
 							}
 """))
 				.andExpect(MockMvcResultMatchers.status().isOk())
@@ -44,8 +44,8 @@ class OrderControllerTest {
 							"lastname": "Mustermann",
 							"firstname": "Max",
 							"email": "fabian@doez.info",
-							"quantity_smoked": 1,
-							"quantity_fresh": 2
+							"quantitySmoked": 1,
+							"quantityFresh": 2
 							}
 						"""));
 	}

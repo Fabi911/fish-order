@@ -1,10 +1,6 @@
 package de.fvleineck.backend.order.model;
 
-import org.springframework.data.mongodb.core.mapping.MongoId;
-
-public record Order(
-		@MongoId
-		String id,
+public record OrderDTO(
 		String lastname,
 		String firstname,
 		String email,
