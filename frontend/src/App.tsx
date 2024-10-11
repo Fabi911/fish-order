@@ -47,7 +47,7 @@ function App() {
 	}
 	return (
 		<>
-			<img src='../public/logo.png' alt="fv-leineck" width="150"/>
+			<img src='./logo.png' alt="fv-leineck" width="150"/>
 			<h1>Bestellung Forellenverkauf</h1>
 			<article className="article">
 				<h2>für den 22.12.2024</h2>
