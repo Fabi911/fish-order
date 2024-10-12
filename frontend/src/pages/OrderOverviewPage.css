@@ -1,0 +1,24 @@
+.search{
+    width: 25rem;
+    align-self: flex-end;
+    margin: 1rem;
+}
+
+.quantityBox{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 30rem;
+    align-self: flex-start;
+}
+
+.pageContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    min-width: 320px;
+    font-size: 1.6rem;
+}
