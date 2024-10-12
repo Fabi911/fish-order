@@ -36,7 +36,11 @@ public class OrderService {
 		newOrder = new Order(orderId, newOrder.lastname(), newOrder.firstname(), newOrder.email(), newOrder.pickupPlace(), newOrder.comment(),
 				newOrder.quantitySmoked(), newOrder.quantityFresh());
 		Order savedOrder = orderRepository.save(newOrder);
-		sendOrderConfirmationEmail(savedOrder);
+		if (savedOrder != null) {
+			sendOrderConfirmationEmail(savedOrder);
+		} else {
+			logger.severe("Failed to save order: " + newOrder);
+		}
 		return savedOrder;
 	}
 

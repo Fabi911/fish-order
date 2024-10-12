@@ -14,32 +14,36 @@ export default function OrderOverviewPage() {
 	const [search, setSearch] = useState<string>('');
 	// Function to get all orders from the backend
 	const getOrders = async () => {
-		axios.get('/api/orders')
-			.then(response => {
-				setOrders(response.data);
-			})
-			.catch(error => {
+		try {
+			const response = await axios.get('/api/orders');
+			setOrders(response.data);
+		} catch (error) {
+			if (axios.isAxiosError(error) && error.response?.status === 500) {
+				console.error("Internal Server Error: Unable to fetch orders.");
+				// Display a user-friendly message or take appropriate action
+				alert("An error occurred while fetching orders. Please try again later.");
+			} else {
 				console.error(error);
-			});
-	}
+			}
+		}
+	};
 	// Function to get total quantity from the backend
 	const getTotalQuantitySmoked = async () => {
-		await axios.get('/api/orders/smoked')
-			.then(response => {
-				setTotalSmoked(response.data);
-			})
-			.catch(error => {
+		try{
+		const response= await axios.get('/api/orders/smoked');
+			setTotalSmoked(response.data);
+			}
+			catch (error) {
 				console.error(error);
-			});
+			};
 	}
 	const getTotalQuantityFresh = async () => {
-		await axios.get('/api/orders/fresh')
-			.then(response => {
+		try{
+		const response= await axios.get('/api/orders/fresh');
 				setTotalFresh(response.data);
-			})
-			.catch(error => {
+			}catch (error) {
 				console.error(error);
-			});
+			}
 	}
 
 	// Fetch orders and total quantities on first render
@@ -93,6 +97,10 @@ export default function OrderOverviewPage() {
 			.catch(error => {
 				console.error(error);
 			});
+	}
+
+	if (!orders) {
+		return <h1>Lade...</h1>
 	}
 
 	// Return the page

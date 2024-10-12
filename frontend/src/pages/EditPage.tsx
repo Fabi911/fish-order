@@ -10,6 +10,9 @@ interface EditPageProps {
 export default function EditPage({ orders }: EditPageProps) {
 	const {id} = useParams();
 	const order = orders.find(order => order.id === id);
+	if (!order) {
+		return <h1>Bestellung nicht gefunden</h1>
+	}
 	return (
 		<>
 			<h1>Bestellung Forellenverkauf</h1>

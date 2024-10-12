@@ -27,23 +27,27 @@ class OrderControllerTest {
 				.contentType(MediaType.APPLICATION_JSON)
 				.content("""
 						{
-							"id": "1",
+							"id": "0001-20241222",
 							"lastname": "Mustermann",
 							"firstname": "Max",
 							"email": "fabian@doez.info",
 							"quantitySmoked": 1,
-							"quantityFresh": 2
+							"quantityFresh": 2,
+							"pickupPlace": "home",
+							"comment": "no comment"
 							}
 """))
 				.andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(MockMvcResultMatchers.content().json("""
 						{
-							"id": "1",
+							"id": "0001-20241222",
 							"lastname": "Mustermann",
 							"firstname": "Max",
 							"email": "fabian@doez.info",
 							"quantitySmoked": 1,
-							"quantityFresh": 2
+							"quantityFresh": 2,
+							"pickupPlace": "home",
+							"comment": "no comment"
 							}
 						"""));
 	}
@@ -67,7 +71,9 @@ class OrderControllerTest {
                         "firstname": "Max",
                         "email": "fabian@doez.info",
                         "quantitySmoked": 1,
-                        "quantityFresh": 2
+                        "quantityFresh": 2,
+							"pickupPlace": "home",
+							"comment": "no comment"
                      }
             """))
 				.andExpect(MockMvcResultMatchers.status().isOk());

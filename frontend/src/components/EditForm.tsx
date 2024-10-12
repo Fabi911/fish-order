@@ -7,14 +7,11 @@ import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox
 import {useNavigate} from "react-router-dom";
 
 interface Props {
-	order?: Order;
+	order: Order;
 }
 
 export default function EditForm({order}: Props) {
 	const navigate = useNavigate();
-	if (!order) {
-		return <p>Bestellung nicht gefunden</p>
-	}
 	const id:string | undefined=order.id;
 	const [firstname, setFirstname] = useState<string>(order.firstname);
 	const [lastname, setLastname] = useState<string>(order.lastname);
