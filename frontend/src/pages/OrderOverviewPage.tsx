@@ -3,6 +3,9 @@ import axios from "axios";
 import {useEffect, useState} from "react";
 import {Order} from "../types/Order.ts";
 import {DataGrid, GridColDef, GridRenderCellParams} from '@mui/x-data-grid';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import EditIcon from '@mui/icons-material/Edit';
+import {Link} from "react-router-dom";
 
 export default function OrderOverviewPage() {
 	const [orders, setOrders] = useState<Order[] | null>(null);
@@ -38,16 +41,22 @@ export default function OrderOverviewPage() {
 				console.error(error);
 			});
 	}
+
+	// Fetch orders and total quantities on first render
 	useEffect(() => {
 		getOrders();
 		getTotalQuantitySmoked();
 		getTotalQuantityFresh();
 	}, []);
+
+	// Function to refresh the orders and total quantities
 	const handleRefresh = () => {
 		getOrders();
 		getTotalQuantitySmoked();
 		getTotalQuantityFresh();
 	};
+
+	// Function to search orders by lastname, email or id
 	const searchOrders = (): Order[] => {
 		return orders?.filter(order => {
 			const lowerCaseSearch = search.toLowerCase();
@@ -56,12 +65,14 @@ export default function OrderOverviewPage() {
 				(order.id ?? ``).toLowerCase().includes(lowerCaseSearch);
 		}) || [];
 	}
+
+	// Columns for the DataGrid
 	const columns: GridColDef[] = [
 		{field: 'id', headerName: 'Bestellnummer', width: 150},
 		{field: 'lastname', headerName: 'Nachname', width: 200},
 		{field: 'firstname', headerName: 'Vorname', width: 200},
 		{field: 'email', headerName: 'E-Mail', width: 250},
-		{field: 'pickupPlace', headerName: 'Abholort', width: 200},
+		{field: 'pickupPlace', headerName: 'Abholort', width: 120},
 		{field: 'comment', headerName: 'Kommentar', width: 200},
 		{field: 'quantitySmoked', headerName: 'Geräucherte', width: 100},
 		{field: 'quantityFresh', headerName: 'Eingelegte', width: 100},
@@ -69,9 +80,22 @@ export default function OrderOverviewPage() {
 			field: 'totalPrice',
 			headerName: 'Gesamtbetrag',
 			width: 150,
-			renderCell: (params: GridRenderCellParams) => (params.row.quantitySmoked * 8 + params.row.quantityFresh * 6.5).toFixed(2) + '€'
-		}
+			renderCell: (params: GridRenderCellParams) => (params.row.quantitySmoked * 7.5 + params.row.quantityFresh * 6).toFixed(2) + '€'
+		},
+		{field: 'editRemove', headerName: '', width: 70, renderCell: (params: GridRenderCellParams) => (<div className="editRemove"><button onClick={()=> handleDelete(params.row.id)}><DeleteForeverIcon fontSize="large"/></button> <Link to={`/order-edit/${params.row.id}`}><EditIcon fontSize="large"/></Link></div>)}
 	];
+	// Functions to edit and delete orders
+	const handleDelete = (id: string) => {
+		axios.delete(`/api/orders/${id}`)
+			.then(() => {
+				handleRefresh();
+			})
+			.catch(error => {
+				console.error(error);
+			});
+	}
+
+	// Return the page
 	return (
 		<div className="pageContainer">
 			<h1>Übersicht</h1>
@@ -85,14 +109,14 @@ export default function OrderOverviewPage() {
 			<h2>Bestellungen</h2>
 			<input className="search" type="search" placeholder="Suche..."
 			       onChange={event => setSearch(event.target.value)}/>
-			<DataGrid rows={searchOrders()} columns={columns} autoHeight={true} getRowId={(row) => row.id}
+			<DataGrid rows={searchOrders()} columns={columns} getRowId={(row) => row.id}
 			          initialState={{
 				          pagination: {
 					          paginationModel: {
 						          pageSize: 20,
 					          },
 				          },
-			          }} sx={{fontSize: '1.4rem', borderColor: 'white'}}/>
+			          }} sx={{fontSize: '1.4rem', borderColor: 'white', width:'90vw'}}/>
 		</div>
 	)
 }

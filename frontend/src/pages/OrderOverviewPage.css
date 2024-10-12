@@ -22,3 +22,16 @@
     min-width: 320px;
     font-size: 1.6rem;
 }
+
+.editRemove{
+    display: flex;
+    gap: 1.4rem;
+    align-items: center;
+}
+
+Link{
+    text-decoration: none;
+    color: black;
+    margin: 0;
+    padding: 0;
+}

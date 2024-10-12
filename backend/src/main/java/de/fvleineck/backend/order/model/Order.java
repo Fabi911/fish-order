@@ -8,7 +8,7 @@ public record Order(
 		String email,
 		String pickupPlace,
 		String comment,
-		int quantitySmoked,
-		int quantityFresh
+		Integer quantitySmoked,
+		Integer quantityFresh
 ) {
 }

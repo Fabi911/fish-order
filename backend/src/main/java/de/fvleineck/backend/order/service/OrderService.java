@@ -1,5 +1,6 @@
 package de.fvleineck.backend.order.service;
 
+import de.fvleineck.backend.order.OrderNotFoundException;
 import de.fvleineck.backend.order.model.Order;
 
 import de.fvleineck.backend.order.repository.OrderRepository;
@@ -21,9 +22,9 @@ public class OrderService {
 
 	private String generateOrderId() {
 		orderCounter++;
-		String year="2024";
-		String month="12";
-		String day="22";
+		String year = "2024";
+		String month = "12";
+		String day = "22";
 		return String.format("%04d", orderCounter) + "-" + year + month + day;
 	}
 
@@ -32,7 +33,7 @@ public class OrderService {
 		do {
 			orderId = generateOrderId();
 		} while (orderRepository.existsById(orderId));
-		newOrder = new Order(orderId, newOrder.lastname(), newOrder.firstname(), newOrder.email(),newOrder.pickupPlace(), newOrder.comment(),
+		newOrder = new Order(orderId, newOrder.lastname(), newOrder.firstname(), newOrder.email(), newOrder.pickupPlace(), newOrder.comment(),
 				newOrder.quantitySmoked(), newOrder.quantityFresh());
 		Order savedOrder = orderRepository.save(newOrder);
 		sendOrderConfirmationEmail(savedOrder);
@@ -47,8 +48,23 @@ public class OrderService {
 		orderRepository.deleteById(id);
 	}
 
+	public Order updateOrder(String id, Order updatedOrder) {
+		Order existingOrder = orderRepository.findById(id).orElseThrow(() -> new OrderNotFoundException(id));
+		Order editedOrder = new Order(
+				id, // Keep the same id
+				updatedOrder.lastname() != null ? updatedOrder.lastname() : existingOrder.lastname(),
+				updatedOrder.firstname() != null ? updatedOrder.firstname() : existingOrder.firstname(),
+				updatedOrder.email() != null ? updatedOrder.email() : existingOrder.email(),
+				updatedOrder.pickupPlace() != null ? updatedOrder.pickupPlace() : existingOrder.pickupPlace(),
+				updatedOrder.comment() != null ? updatedOrder.comment() : existingOrder.comment(),
+				updatedOrder.quantitySmoked() != null ? updatedOrder.quantitySmoked() : existingOrder.quantitySmoked(),
+				updatedOrder.quantityFresh() != null ? updatedOrder.quantityFresh() : existingOrder.quantityFresh()
+		);
+		return orderRepository.save(editedOrder);
+	}
+
 	public void sendOrderConfirmationEmail(Order order) {
-		String subject = "Bestellbestätigung "+ order.id();
+		String subject = "Bestellbestätigung " + order.id();
 		StringBuilder textBuilder = new StringBuilder();
 		textBuilder.append("Danke für ihre Bestellung, ")
 				.append(order.firstname())
