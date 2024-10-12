@@ -4,4 +4,5 @@
 	email: string
 	quantitySmoked: number
 	quantityFresh: number
+	 id?: string
  }
