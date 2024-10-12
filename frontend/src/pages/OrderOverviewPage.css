@@ -4,6 +4,14 @@
     margin: 1rem;
 }
 
+.searchContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
 .quantityBox{
     display: flex;
     flex-direction: column;

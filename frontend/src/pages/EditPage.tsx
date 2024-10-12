@@ -1,7 +1,7 @@
 import './OrderPage.css';
 import {Order} from "../types/Order.ts";
 import EditForm from "../components/EditForm.tsx";
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 
 interface EditPageProps {
 	orders: Order[];
@@ -19,7 +19,9 @@ export default function EditPage({ orders }: EditPageProps) {
 				<p className="price">geräucherte Forelle: 7,50€</p>
 				<p>eingelegte Forelle: 6,00€</p>
 			</article>
-			<EditForm order={order} />
+			<EditForm order={order}/>
+			<br/>
+			<Link to="/order-overview">Zur Übersicht</Link>
 		</>
 	)
 }

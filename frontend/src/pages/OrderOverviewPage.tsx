@@ -107,8 +107,11 @@ export default function OrderOverviewPage() {
 				<p>Gesamt: <b>{totalSmoked + totalFresh}</b></p>
 			</article>
 			<h2>Bestellungen</h2>
+			<div className="searchContainer">
+				<Link to="/">zurück</Link>
 			<input className="search" type="search" placeholder="Suche..."
 			       onChange={event => setSearch(event.target.value)}/>
+			</div>
 			<DataGrid rows={searchOrders()} columns={columns} getRowId={(row) => row.id}
 			          initialState={{
 				          pagination: {

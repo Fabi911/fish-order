@@ -1,5 +1,6 @@
 import OrderForm from "../components/OrderForm.tsx";
 import './OrderPage.css';
+import {Link} from "react-router-dom";
 export default function OrderPage() {
 	return (
 		<>
@@ -11,6 +12,8 @@ export default function OrderPage() {
 				<p>eingelegte Forelle: 6,50€</p>
 			</article>
 			<OrderForm />
+			<br/>
+			<Link to="/order-overview">Zur Übersicht</Link>
 		</>
 	)
 }
