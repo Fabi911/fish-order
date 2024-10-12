@@ -43,4 +43,9 @@ public class OrderController {
 	public int getFreshFishCount() {
 		return orderService.getTotalQuantityFresh();
 	}
+
+	@PutMapping("/{id}")
+	public Order updateOrder(@PathVariable String id, @RequestBody Order order) {
+		return orderService.updateOrder(id, order);
+	}
 }

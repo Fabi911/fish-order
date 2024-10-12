@@ -4,15 +4,22 @@ import {Order} from "../types/Order.ts";
 import './OrderForm.css';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox';
+import {useNavigate} from "react-router-dom";
 
-export default function OrderForm() {
-	const [firstname, setFirstname] = useState<string>('')
-	const [lastname, setLastname] = useState<string>('')
-	const [email, setEmail] = useState<string>('')
-	const [quantitySmoked, setQuantitySmoked] = useState<number>(0)
-	const [quantityFresh, setQuantityFresh] = useState<number>(0)
-	const [pickupPlace, setPickupPlace] = useState<string>('')
-	const [comment, setComment] = useState<string>('')
+interface Props {
+	order: Order;
+}
+
+export default function EditForm({order}: Props) {
+	const navigate = useNavigate();
+	const id:string | undefined=order.id;
+	const [firstname, setFirstname] = useState<string>(order.firstname);
+	const [lastname, setLastname] = useState<string>(order.lastname);
+	const [email, setEmail] = useState<string>(order.email);
+	const [quantitySmoked, setQuantitySmoked] = useState<number>(order.quantitySmoked);
+	const [quantityFresh, setQuantityFresh] = useState<number>(order.quantityFresh);
+	const [pickupPlace, setPickupPlace] = useState<string>(order.pickupPlace);
+	const [comment, setComment] = useState<string>(order.comment);
 	const [responseMessage, setResponseMessage] = useState<string>('');
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -21,6 +28,7 @@ export default function OrderForm() {
 			return;
 		}
 		const order = {
+			id,
 			firstname,
 			lastname,
 			email,
@@ -29,11 +37,13 @@ export default function OrderForm() {
 			quantitySmoked,
 			quantityFresh
 		}
-		postOrder(order,e);
+		updateOrder(order,e);
+		navigate('/order-overview')
 
 	}
-	const postOrder = (order: Order , e: React.FormEvent<HTMLFormElement>): void => {
-		axios.post('/api/orders', {
+	console.log(order.id);
+	const updateOrder = (order: Order , e: React.FormEvent<HTMLFormElement>): void => {
+		axios.put(`/api/orders/${order.id}`, {
 			firstname: order.firstname,
 			lastname: order.lastname,
 			email: order.email,
@@ -52,11 +62,11 @@ export default function OrderForm() {
 				setQuantitySmoked(0);
 				setQuantityFresh(0);
 				e.currentTarget?.reset();
-				setResponseMessage('Bestellung war erfolgreich!\n Sie erhalten eine Bestätigung per E-Mail.');
+				setResponseMessage('Bearbeitung war erfolgreich!');
 			})
 			.catch(error => {
 				console.error(error);
-				setResponseMessage('Bestellung fehlgeschlagen!');
+				setResponseMessage('Bearbeitung fehlgeschlagen!');
 			});
 	}
 
