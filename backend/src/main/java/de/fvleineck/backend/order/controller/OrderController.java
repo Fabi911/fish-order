@@ -33,4 +33,14 @@ public class OrderController {
 	public void deleteOrder(@PathVariable String id) {
 		orderService.deleteOrder(id);
 	}
+
+	@GetMapping("/smoked")
+	public int getSmokedFishCount() {
+		return orderService.getTotalQuantitySmoked();
+	}
+
+	@GetMapping("/fresh")
+	public int getFreshFishCount() {
+		return orderService.getTotalQuantityFresh();
+	}
 }

@@ -27,12 +27,7 @@
     display: flex;
     gap: 1rem;
     align-items: flex-start;
-   /* justify-content: center;
-    padding: 0.2rem;
-    background: #ffffff;
-    border: 0.1rem solid #242424;
-    border-radius: 0.2rem;
-    width: 40%;*/
+    margin-left: 1.3rem;
 }
 
 button {

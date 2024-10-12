@@ -32,7 +32,7 @@ public class OrderService {
 		orderRepository.deleteById(id);
 	}
 
-	private void sendOrderConfirmationEmail(Order order) {
+	public void sendOrderConfirmationEmail(Order order) {
 		String subject = "Bestellbestätigung";
 		StringBuilder textBuilder = new StringBuilder();
 		textBuilder.append("Danke für ihre Bestellung, ")
@@ -55,5 +55,13 @@ public class OrderService {
 		} catch (Exception e) {
 			logger.severe("Failed to send order confirmation email: " + e.getMessage());
 		}
+	}
+
+	public int getTotalQuantitySmoked() {
+		return orderRepository.findAll().stream().mapToInt(Order::quantitySmoked).sum();
+	}
+
+	public int getTotalQuantityFresh() {
+		return orderRepository.findAll().stream().mapToInt(Order::quantityFresh).sum();
 	}
 }

@@ -74,7 +74,7 @@ export default function OrderForm() {
 				</div>
 			</div>
 			<div className="inputField">
-				<label className="label" htmlFor="quantity_smoked">Geräucherte Forelle:</label>
+				<label className="label" htmlFor="quantity_smoked">Eingelegte Forelle:</label>
 				<div className="quantity-controls">
 					<button type="button" onClick={() => setQuantityFresh(prev => Math.max(prev - 1, 0))}><IndeterminateCheckBoxIcon fontSize="large"/></button>
 					<span>{quantityFresh}</span>
