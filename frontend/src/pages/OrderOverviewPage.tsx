@@ -1,11 +1,12 @@
 import './OrderOverviewPage.css';
 import axios from "axios";
-import {useEffect, useState} from "react";
+import  {useEffect, useState} from "react";
 import {Order} from "../types/Order.ts";
 import {DataGrid, GridColDef, GridRenderCellParams} from '@mui/x-data-grid';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import {Link} from "react-router-dom";
+import ExportToXLSX from "../components/ExportToXLSX.tsx";
 
 export default function OrderOverviewPage() {
 	const [orders, setOrders] = useState<Order[] | null>(null);
@@ -45,6 +46,10 @@ export default function OrderOverviewPage() {
 				console.error(error);
 			}
 	}
+
+
+
+
 
 	// Fetch orders and total quantities on first render
 	useEffect(() => {
@@ -108,6 +113,7 @@ export default function OrderOverviewPage() {
 		<div className="pageContainer">
 			<h1>Übersicht</h1>
 			<button onClick={handleRefresh}>Refresh</button>
+			<ExportToXLSX data={orders} totalSmoked={totalSmoked} totalFresh={totalFresh}/>
 			<article className="quantityBox">
 				<h2>Gesamtmenge</h2>
 				<p>Geräucherte Forellen: <b>{totalSmoked}</b></p>
