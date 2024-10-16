@@ -26,29 +26,31 @@ class OrderControllerTest {
 		mvc.perform(MockMvcRequestBuilders.post("/api/orders")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content("""
-						{
-							"id": "0001-20241222",
-							"lastname": "Mustermann",
-							"firstname": "Max",
-							"email": "fabian@doez.info",
-							"quantitySmoked": 1,
-							"quantityFresh": 2,
-							"pickupPlace": "home",
-							"comment": "no comment"
-							}
-"""))
+												{
+													"id": "0001-20241222",
+													"lastname": "Mustermann",
+													"firstname": "Max",
+													"email": "fabian@doez.info",
+													"phone": "0123456789",
+													"quantitySmoked": 1,
+													"quantityFresh": 2,
+													"pickupPlace": "home",
+													"comment": "no comment"
+													}
+						"""))
 				.andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(MockMvcResultMatchers.content().json("""
-						{
-							"id": "0001-20241222",
-							"lastname": "Mustermann",
-							"firstname": "Max",
-							"email": "fabian@doez.info",
-							"quantitySmoked": 1,
-							"quantityFresh": 2,
-							"pickupPlace": "home",
-							"comment": "no comment"
-							}
+											{
+												"id": "0001-20241222",
+												"lastname": "Mustermann",
+												"firstname": "Max",
+												"email": "fabian@doez.info",
+												"phone": "0123456789",
+												"quantitySmoked": 1,
+												"quantityFresh": 2,
+												"pickupPlace": "home",
+												"comment": "no comment"
+												}
 						"""));
 	}
 
@@ -70,6 +72,7 @@ class OrderControllerTest {
                         "lastname": "Mustermann",
                         "firstname": "Max",
                         "email": "fabian@doez.info",
+                        "phone": "0123456789",
                         "quantitySmoked": 1,
                         "quantityFresh": 2,
 							"pickupPlace": "home",

@@ -6,6 +6,7 @@ public record Order(
 		String lastname,
 		String firstname,
 		String email,
+		String phone,
 		String pickupPlace,
 		String comment,
 		Integer quantitySmoked,

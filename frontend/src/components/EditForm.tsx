@@ -16,6 +16,7 @@ export default function EditForm({order}: Props) {
 	const [firstname, setFirstname] = useState<string>(order.firstname);
 	const [lastname, setLastname] = useState<string>(order.lastname);
 	const [email, setEmail] = useState<string>(order.email);
+	const [phone, setPhone]=useState<string>(order.phone);
 	const [quantitySmoked, setQuantitySmoked] = useState<number>(order.quantitySmoked);
 	const [quantityFresh, setQuantityFresh] = useState<number>(order.quantityFresh);
 	const [pickupPlace, setPickupPlace] = useState<string>(order.pickupPlace);
@@ -32,6 +33,7 @@ export default function EditForm({order}: Props) {
 			firstname,
 			lastname,
 			email,
+			phone,
 			pickupPlace,
 			comment,
 			quantitySmoked,
@@ -47,6 +49,7 @@ export default function EditForm({order}: Props) {
 			firstname: order.firstname,
 			lastname: order.lastname,
 			email: order.email,
+			phone: order.phone,
 			pickupPlace: order.pickupPlace,
 			comment: order.comment,
 			quantitySmoked: order.quantitySmoked,
@@ -57,6 +60,7 @@ export default function EditForm({order}: Props) {
 				setFirstname('');
 				setLastname('');
 				setEmail('');
+				setPhone('');
 				setPickupPlace('');
 				setComment('');
 				setQuantitySmoked(0);
@@ -72,53 +76,63 @@ export default function EditForm({order}: Props) {
 
 	return (
 		<>
-		<form className="form" onSubmit={handleSubmit}>
-			<div className="inputField">
-				<label className="label" htmlFor="firstname">Vorname:*</label>
-				<input type="text" id="firstname" placeholder="Vorname" required value={firstname}
-				       onChange={(e) => setFirstname(e.target.value)}/>
-			</div>
-			<div className="inputField">
-				<label className="label" htmlFor="lastname">Nachname:*</label>
-				<input type="text" id="lastname" placeholder="Nachname" required value={lastname}
-				       onChange={(e) => setLastname(e.target.value)}/>
-			</div>
-			<div className="inputField">
-				<label className="label" htmlFor="email">Email:*</label>
-				<input type="email" id="email" name="email" placeholder="info@muster.com" required value={email}
-				       onChange={(e) => setEmail(e.target.value)}/>
-			</div>
-			<div className="inputField">
-				<label className="label" htmlFor="quantity_smoked">Geräucherte Forelle:</label>
-				<div className="quantity-controls">
-					<button type="button" onClick={() => setQuantitySmoked(prev => Math.max(prev - 1, 0))}><IndeterminateCheckBoxIcon fontSize="large"/></button>
-					<span>{quantitySmoked}</span>
-					<button type="button" onClick={() => setQuantitySmoked(prev => prev + 1)}><AddBoxIcon fontSize="large"/></button>
+			<form className="form" onSubmit={handleSubmit}>
+				<div className="inputField">
+					<label className="label" htmlFor="firstname">Vorname:*</label>
+					<input type="text" id="firstname" placeholder="Vorname" required value={firstname}
+					       onChange={(e) => setFirstname(e.target.value)}/>
 				</div>
-			</div>
-			<div className="inputField">
-				<label className="label" htmlFor="quantity_smoked">Eingelegte Forelle:</label>
-				<div className="quantity-controls">
-					<button type="button" onClick={() => setQuantityFresh(prev => Math.max(prev - 1, 0))}><IndeterminateCheckBoxIcon fontSize="large"/></button>
-					<span>{quantityFresh}</span>
-					<button type="button" onClick={() => setQuantityFresh(prev => prev + 1)}><AddBoxIcon fontSize="large"/></button>
+				<div className="inputField">
+					<label className="label" htmlFor="lastname">Nachname:*</label>
+					<input type="text" id="lastname" placeholder="Nachname" required value={lastname}
+					       onChange={(e) => setLastname(e.target.value)}/>
 				</div>
-			</div>
-			<div className="inputField">
-				<label className="label" htmlFor="pickupPlace">Abholort:*</label>
-				<select id="pickupPlace" required value={pickupPlace} onChange={(e)=>setPickupPlace(e.target.value)}>
-					<option value="">Bitte wählen</option>
-					<option value="Weinstadt">Weinstadt</option>
-					<option value="Vereinsheim ">Vereinsheim</option>
-				</select>
-			</div>
-			<div className="inputField">
-				<label className="label" htmlFor="comment">Kommentar:</label>
-				<textarea id="comment" placeholder="Kommentar" value={comment}
-				          onChange={(e) => setComment(e.target.value)}/>
-			</div>
-			<button className="orderButton" type="submit">Bestellen</button>
-		</form>
+				<div className="inputField">
+					<label className="label" htmlFor="email">Email:*</label>
+					<input type="email" id="email" name="email" placeholder="info@muster.com" required value={email}
+					       onChange={(e) => setEmail(e.target.value)}/>
+				</div>
+				<div className="inputField">
+					<label className="label" htmlFor="phone">Telefonnummer:*</label>
+					<input type="tel" id="phone" name="phone" placeholder="0123456789" required value={phone}
+					       onChange={(e) => setPhone(e.target.value)}/>
+				</div>
+				<div className="inputField">
+					<label className="label" htmlFor="quantity_smoked">Geräucherte Forelle:</label>
+					<div className="quantity-controls">
+						<button type="button" onClick={() => setQuantitySmoked(prev => Math.max(prev - 1, 0))}>
+							<IndeterminateCheckBoxIcon fontSize="large"/></button>
+						<span>{quantitySmoked}</span>
+						<button type="button" onClick={() => setQuantitySmoked(prev => prev + 1)}><AddBoxIcon
+							fontSize="large"/></button>
+					</div>
+				</div>
+				<div className="inputField">
+					<label className="label" htmlFor="quantity_smoked">Eingelegte Forelle:</label>
+					<div className="quantity-controls">
+						<button type="button" onClick={() => setQuantityFresh(prev => Math.max(prev - 1, 0))}>
+							<IndeterminateCheckBoxIcon fontSize="large"/></button>
+						<span>{quantityFresh}</span>
+						<button type="button" onClick={() => setQuantityFresh(prev => prev + 1)}><AddBoxIcon
+							fontSize="large"/></button>
+					</div>
+				</div>
+				<div className="inputField">
+					<label className="label" htmlFor="pickupPlace">Abholort:*</label>
+					<select id="pickupPlace" required value={pickupPlace}
+					        onChange={(e) => setPickupPlace(e.target.value)}>
+						<option value="">Bitte wählen</option>
+						<option value="Weinstadt">Weinstadt</option>
+						<option value="Vereinsheim ">Vereinsheim</option>
+					</select>
+				</div>
+				<div className="inputField">
+					<label className="label" htmlFor="comment">Kommentar:</label>
+					<textarea id="comment" placeholder="Kommentar" value={comment}
+					          onChange={(e) => setComment(e.target.value)}/>
+				</div>
+				<button className="orderButton" type="submit">Bestellen</button>
+			</form>
 			{responseMessage && <p>{responseMessage}</p>}
 		</>
 	)

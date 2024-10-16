@@ -1,10 +1,11 @@
- export type Order = {
+export type Order = {
 	firstname: string
 	lastname: string
 	email: string
-	 pickupPlace: string
-	 comment: string
+	phone: string
+	pickupPlace: string
+	comment: string
 	quantitySmoked: number
 	quantityFresh: number
-	 id?: string
- }
+	id?: string
+}

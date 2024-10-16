@@ -15,8 +15,8 @@ class OrderServiceTest {
 
 	@Test
 	void testCreateOrder() {
-		Order order = new Order(null, "lastname", "firstname", "email", "home", "", 1, 1);
-		Order savedOrder = new Order("0001-20241222", "lastname", "firstname", "email", "home", "", 1, 1);
+		Order order = new Order(null, "lastname", "firstname", "email","0123456789", "home", "", 1, 1);
+		Order savedOrder = new Order("0001-20241222", "lastname", "firstname", "email", "0123456789","home", "", 1, 1);
 		when(mockOrderRepository.save(any(Order.class))).thenReturn(savedOrder);
 
 		OrderService orderService = new OrderService(mockOrderRepository, mockEmailService);
@@ -29,7 +29,7 @@ class OrderServiceTest {
 
 	@Test
 	void testGetAllOrders() {
-		Order order = new Order("1", "lastname", "firstname", "email", "home", "", 1, 1);
+		Order order = new Order("1", "lastname", "firstname", "email", "0123456789","home", "", 1, 1);
 		when(mockOrderRepository.findAll()).thenReturn(java.util.List.of(order));
 
 		OrderService orderService = new OrderService(mockOrderRepository,mockEmailService);

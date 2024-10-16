@@ -1,5 +1,7 @@
 import ExcelJS from "exceljs";
 import {Order} from "../types/Order.ts";
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import '../pages/OrderOverviewPage.css';
 
 interface Props {
 	data: Order[];
@@ -17,6 +19,7 @@ export default function ExportToXLSX ({data, totalSmoked, totalFresh}: Props){
 			{header: 'Nachname', key: 'lastname', width: 20},
 			{header: 'Vorname', key: 'firstname', width: 20},
 			{header: 'E-Mail', key: 'email', width: 35},
+			{header: 'Telefonnummer', key: 'phone', width: 25},
 			{header: 'Abholort', key: 'pickupPlace', width: 20},
 			{header: 'Kommentar', key: 'comment', width: 35},
 			{header: 'Geräucherte', key: 'quantitySmoked', width: 15},
@@ -29,8 +32,8 @@ export default function ExportToXLSX ({data, totalSmoked, totalFresh}: Props){
 			row.font = {name: 'Arial', size: 14};
 		});
 		for (let i = 2; i <= data.length + 1; i++) {
-			worksheet.getCell(`I${i}`).value = {
-				formula: `SUM(G${i}*7.5+H${i}*6)`,
+			worksheet.getCell(`J${i}`).value = {
+				formula: `SUM(H${i}*7.5+I${i}*6)`,
 				result: (totalSmoked * 7.5 + totalFresh * 6).toFixed(2) + '€'
 			}
 		}
@@ -55,7 +58,7 @@ export default function ExportToXLSX ({data, totalSmoked, totalFresh}: Props){
 	}
 return (
 	<>
-	<button onClick={() => handleExport(data)} >Exportieren</button>
+	<button className="exportButton" onClick={() => handleExport(data)} ><FileDownloadIcon fontSize="large"/> Download Excel</button>
 	</>
 )
 };

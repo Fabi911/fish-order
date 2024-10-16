@@ -33,7 +33,8 @@ public class OrderService {
 		do {
 			orderId = generateOrderId();
 		} while (orderRepository.existsById(orderId));
-		newOrder = new Order(orderId, newOrder.lastname(), newOrder.firstname(), newOrder.email(), newOrder.pickupPlace(), newOrder.comment(),
+		newOrder = new Order(orderId, newOrder.lastname(), newOrder.firstname(), newOrder.email(),
+				newOrder.phone(), newOrder.pickupPlace(), newOrder.comment(),
 				newOrder.quantitySmoked(), newOrder.quantityFresh());
 		Order savedOrder = orderRepository.save(newOrder);
 		if (savedOrder != null) {
@@ -59,6 +60,7 @@ public class OrderService {
 				updatedOrder.lastname() != null ? updatedOrder.lastname() : existingOrder.lastname(),
 				updatedOrder.firstname() != null ? updatedOrder.firstname() : existingOrder.firstname(),
 				updatedOrder.email() != null ? updatedOrder.email() : existingOrder.email(),
+				updatedOrder.phone() != null ? updatedOrder.phone() : existingOrder.phone(),
 				updatedOrder.pickupPlace() != null ? updatedOrder.pickupPlace() : existingOrder.pickupPlace(),
 				updatedOrder.comment() != null ? updatedOrder.comment() : existingOrder.comment(),
 				updatedOrder.quantitySmoked() != null ? updatedOrder.quantitySmoked() : existingOrder.quantitySmoked(),
@@ -87,6 +89,8 @@ public class OrderService {
 				.append("<br><br>")
 				.append("Abholort: ")
 				.append(order.pickupPlace())
+				.append("<br>")
+				.append("Abholzeitraum: 09:00 - 12:00 Uhr<br>")
 				.append("<br><br>")
 				.append("Kommentar: ")
 				.append(order.comment())

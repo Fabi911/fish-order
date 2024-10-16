@@ -9,6 +9,7 @@ export default function OrderForm() {
 	const [firstname, setFirstname] = useState<string>('')
 	const [lastname, setLastname] = useState<string>('')
 	const [email, setEmail] = useState<string>('')
+	const [phone, setPhone]=useState<string>('')
 	const [quantitySmoked, setQuantitySmoked] = useState<number>(0)
 	const [quantityFresh, setQuantityFresh] = useState<number>(0)
 	const [pickupPlace, setPickupPlace] = useState<string>('')
@@ -24,6 +25,7 @@ export default function OrderForm() {
 			firstname,
 			lastname,
 			email,
+			phone,
 			pickupPlace,
 			comment,
 			quantitySmoked,
@@ -37,6 +39,7 @@ export default function OrderForm() {
 			firstname: order.firstname,
 			lastname: order.lastname,
 			email: order.email,
+			phone: order.phone,
 			pickupPlace: order.pickupPlace,
 			comment: order.comment,
 			quantitySmoked: order.quantitySmoked,
@@ -47,6 +50,7 @@ export default function OrderForm() {
 				setFirstname('');
 				setLastname('');
 				setEmail('');
+				setPhone('');
 				setPickupPlace('');
 				setComment('');
 				setQuantitySmoked(0);
@@ -77,6 +81,11 @@ export default function OrderForm() {
 				<label className="label" htmlFor="email">Email:*</label>
 				<input type="email" id="email" name="email" placeholder="info@muster.com" required value={email}
 				       onChange={(e) => setEmail(e.target.value)}/>
+			</div>
+			<div className="inputField">
+				<label className="label" htmlFor="phone">Telefonnummer:*</label>
+				<input type="tel" id="phone" name="phone" placeholder="0123456789" required value={phone}
+				       onChange={(e) => setPhone(e.target.value)}/>
 			</div>
 			<div className="inputField">
 				<label className="label" htmlFor="quantity_smoked">Geräucherte Forelle:</label>
