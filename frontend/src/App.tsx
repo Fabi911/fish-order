@@ -9,6 +9,8 @@ import {Order} from "./types/Order.ts";
 
 function App() {
 	const [orders, setOrders] = useState <Order[]>([]);
+
+	// fetch orders from backend
 	const fetchOrders = () => {
 		axios.get('/api/orders')
 			.then(response => {

@@ -19,6 +19,7 @@ public class EmailService {
 		this.mailSender = mailSender;
 	}
 
+	// Send an email to the customer with the order confirmation
 	public void sendOrderConfirmation(String to, String subject, String text) throws MessagingException {
 		MimeMessage message = mailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message, true);

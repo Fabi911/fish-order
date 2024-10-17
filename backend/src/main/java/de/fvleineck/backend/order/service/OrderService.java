@@ -20,6 +20,7 @@ public class OrderService {
 	private static final Logger logger = Logger.getLogger(OrderService.class.getName());
 	private int orderCounter = 0;
 
+	// Generate a unique order id
 	private String generateOrderId() {
 		orderCounter++;
 		String year = "2024";
@@ -69,6 +70,7 @@ public class OrderService {
 		return orderRepository.save(editedOrder);
 	}
 
+		// Send an order confirmation email to the customer
 	public void sendOrderConfirmationEmail(Order order) {
 		String subject = "Bestellbestätigung " + order.id();
 		StringBuilder textBuilder = new StringBuilder();
@@ -105,6 +107,7 @@ public class OrderService {
 		}
 	}
 
+	// Get the total number of smoked and fresh trout ordered
 	public int getTotalQuantitySmoked() {
 		return orderRepository.findAll().stream().mapToInt(Order::quantitySmoked).sum();
 	}

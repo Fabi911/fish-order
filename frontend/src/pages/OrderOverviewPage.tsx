@@ -94,6 +94,7 @@ export default function OrderOverviewPage() {
 				<Link to={`/order-edit/${params.row.id}`}><EditIcon fontSize="large"/></Link></div>)
 		}
 	];
+
 	// Functions to edit and delete orders
 	const handleDelete = (id: string) => {
 		axios.delete(`/api/orders/${id}`)

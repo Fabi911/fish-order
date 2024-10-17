@@ -44,6 +44,8 @@ export default function EditForm({order}: Props) {
 
 	}
 	console.log(order.id);
+
+	// Update order
 	const updateOrder = (order: Order , e: React.FormEvent<HTMLFormElement>): void => {
 		axios.put(`/api/orders/${order.id}`, {
 			firstname: order.firstname,
@@ -77,6 +79,7 @@ export default function EditForm({order}: Props) {
 	return (
 		<>
 			<form className="form" onSubmit={handleSubmit}>
+
 				<div className="inputField">
 					<label className="label" htmlFor="firstname">Vorname:*</label>
 					<input type="text" id="firstname" placeholder="Vorname" required value={firstname}

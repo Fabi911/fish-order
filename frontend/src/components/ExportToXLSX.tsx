@@ -8,7 +8,6 @@ interface Props {
 	totalSmoked: number;
 	totalFresh: number;
 }
-
 export default function ExportToXLSX ({data, totalSmoked, totalFresh}: Props){
 	async function  handleExport(data: Order[]) {
 		const workbook = new ExcelJS.Workbook();
