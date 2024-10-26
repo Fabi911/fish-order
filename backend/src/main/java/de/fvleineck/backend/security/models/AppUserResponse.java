@@ -1,6 +1,6 @@
 package de.fvleineck.backend.security.models;
 
-import de.webdev.backend.security.AppuserRole;
+import de.fvleineck.backend.security.AppuserRole;
 
 public record AppUserResponse(
 		String id,

@@ -21,7 +21,7 @@ class AppUserDetailServiceTest {
 	private AppUserDetailService appUserDetailService;
 
 	@MockBean
-	private de.webdev.backend.security.service.AppuserService appUserService;
+	private de.fvleineck.backend.security.service.AppuserService appUserService;
 
 	@Nested
 	class LoadUserByUsername {

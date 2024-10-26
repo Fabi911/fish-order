@@ -1,10 +1,10 @@
 package de.fvleineck.backend.security.controller;
 
 
-import de.webdev.backend.security.models.AppUser;
-import de.webdev.backend.security.models.AppUserDTO;
-import de.webdev.backend.security.models.AppUserResponse;
-import de.webdev.backend.security.service.AppuserService;
+import de.fvleineck.backend.security.models.AppUser;
+import de.fvleineck.backend.security.models.AppUserDTO;
+import de.fvleineck.backend.security.models.AppUserResponse;
+import de.fvleineck.backend.security.service.AppuserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

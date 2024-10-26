@@ -17,9 +17,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-	String apiMembers = "/api/members/**";
-	String cashJournal = "/api/cash-journal/**";
-	String toDos = "/api/todos/**";
+	String apiOrders = "/api/orders/**";
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
@@ -39,23 +37,11 @@ public class SecurityConfig {
 								.requestMatchers(HttpMethod.POST, "api/users/register").permitAll()
 								.requestMatchers(HttpMethod.POST, "api/users/login").permitAll()
 								// Members
-								.requestMatchers(HttpMethod.DELETE, apiMembers).hasAnyRole(AppuserRole.ADMIN.name(),
+								.requestMatchers(HttpMethod.DELETE, apiOrders).hasAnyRole(AppuserRole.ADMIN.name())
+								.requestMatchers(HttpMethod.GET, apiOrders).hasAnyRole(AppuserRole.ADMIN.name(),
 										AppuserRole.GROUP1.name())
-								.requestMatchers(HttpMethod.GET, apiMembers).hasAnyRole(AppuserRole.ADMIN.name(),
-										AppuserRole.GROUP1.name())
-								.requestMatchers(HttpMethod.PUT, apiMembers).hasAnyRole(AppuserRole.ADMIN.name(), AppuserRole.GROUP1.name())
-								.requestMatchers(HttpMethod.POST, apiMembers).hasAnyRole(AppuserRole.ADMIN.name(),
-										AppuserRole.GROUP1.name())
-								//CashJournal
-								.requestMatchers(HttpMethod.DELETE, cashJournal).hasAnyRole(AppuserRole.ADMIN.name(), AppuserRole.GROUP1.name())
-								.requestMatchers(HttpMethod.GET, cashJournal).hasAnyRole(AppuserRole.ADMIN.name(), AppuserRole.GROUP1.name())
-								.requestMatchers(HttpMethod.PUT, cashJournal).hasAnyRole(AppuserRole.ADMIN.name(), AppuserRole.GROUP1.name())
-								.requestMatchers(HttpMethod.POST, cashJournal).hasAnyRole(AppuserRole.ADMIN.name(), AppuserRole.GROUP1.name())
-								// To_Dos
-								.requestMatchers(HttpMethod.DELETE, toDos).hasAnyRole(AppuserRole.ADMIN.name(), AppuserRole.GROUP1.name())
-								.requestMatchers(HttpMethod.GET, toDos).hasAnyRole(AppuserRole.ADMIN.name(), AppuserRole.GROUP1.name())
-								.requestMatchers(HttpMethod.PUT, toDos).hasAnyRole(AppuserRole.ADMIN.name(), AppuserRole.GROUP1.name())
-								.requestMatchers(HttpMethod.POST, toDos).hasAnyRole(AppuserRole.ADMIN.name(), AppuserRole.GROUP1.name())
+								.requestMatchers(HttpMethod.PUT, apiOrders).hasAnyRole(AppuserRole.ADMIN.name(), AppuserRole.GROUP1.name())
+								.requestMatchers(HttpMethod.POST, apiOrders).permitAll()
 								// All other requests
 								.anyRequest().permitAll()
 				)
