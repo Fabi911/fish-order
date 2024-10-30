@@ -8,8 +8,9 @@ import EditIcon from '@mui/icons-material/Edit';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import {Link} from "react-router-dom";
 import ExportToXLSX from "../components/ExportToXLSX.tsx";
+import {AppUser} from "../types/AppUser.ts";
 
-export default function OrderOverviewPage() {
+export default function OrderOverviewPage({appUser}: { appUser: AppUser }) {
 	const [orders, setOrders] = useState<Order[] | null>(null);
 	const [totalSmoked, setTotalSmoked] = useState<number>(0);
 	const [totalFresh, setTotalFresh] = useState<number>(0);
@@ -90,7 +91,7 @@ export default function OrderOverviewPage() {
 			headerName: '',
 			width: 70,
 			renderCell: (params: GridRenderCellParams) => (<div className="editRemove">
-				<button onClick={() => handleDelete(params.row.id)}><DeleteForeverIcon fontSize="large"/></button>
+				{appUser && appUser.role === "ADMIN" && <button onClick={() => handleDelete(params.row.id)}><DeleteForeverIcon fontSize="large"/></button>}
 				<Link to={`/order-edit/${params.row.id}`}><EditIcon fontSize="large"/></Link></div>)
 		}
 	];
@@ -108,6 +109,8 @@ export default function OrderOverviewPage() {
 	if (!orders) {
 		return <h1>Lade...</h1>
 	}
+
+	console.log(appUser);
 	// Return the page
 	return (
 		<div className="pageContainer">
@@ -133,7 +136,7 @@ export default function OrderOverviewPage() {
 						          pageSize: 20,
 					          },
 				          },
-			          }} sx={{fontSize: '1.4rem', borderColor: 'white', width: '90vw'}}/>
+			          }} sx={{fontSize: '1.4rem', borderColor: 'white', width: '100%'}}/>
 		</div>
 	)
 }

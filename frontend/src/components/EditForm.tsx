@@ -134,7 +134,7 @@ export default function EditForm({order}: Props) {
 					<textarea id="comment" placeholder="Kommentar" value={comment}
 					          onChange={(e) => setComment(e.target.value)}/>
 				</div>
-				<button className="orderButton" type="submit">Bestellen</button>
+				<button className="orderButton" type="submit">Ändern</button>
 			</form>
 			{responseMessage && <p>{responseMessage}</p>}
 		</>

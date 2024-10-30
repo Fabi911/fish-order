@@ -36,10 +36,9 @@ public class SecurityConfig {
 						authorizeRequests
 								.requestMatchers(HttpMethod.POST, "api/users/register").permitAll()
 								.requestMatchers(HttpMethod.POST, "api/users/login").permitAll()
-								// Members
+								// Orders
 								.requestMatchers(HttpMethod.DELETE, apiOrders).hasAnyRole(AppuserRole.ADMIN.name())
-								.requestMatchers(HttpMethod.GET, apiOrders).hasAnyRole(AppuserRole.ADMIN.name(),
-										AppuserRole.GROUP1.name())
+								.requestMatchers(HttpMethod.GET, apiOrders).hasAnyRole(AppuserRole.ADMIN.name(),AppuserRole.GROUP1.name())
 								.requestMatchers(HttpMethod.PUT, apiOrders).hasAnyRole(AppuserRole.ADMIN.name(), AppuserRole.GROUP1.name())
 								.requestMatchers(HttpMethod.POST, apiOrders).permitAll()
 								// All other requests

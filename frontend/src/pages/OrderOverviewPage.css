@@ -9,7 +9,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 90vw;
+    width: 100%;
     margin: 3rem 0 0 0;
 }
 
@@ -20,7 +20,7 @@
     align-items: flex-start;
     width: 30rem;
     align-self: flex-start;
-    margin-left: -20rem;
+  /*  margin-left: -20rem;*/
 }
 
 .pageContainer{
@@ -29,8 +29,9 @@
     align-items: center;
     justify-content: center;
     margin: 0;
-    min-width: 320px;
+    min-width: 32rem;
     font-size: 1.6rem;
+    width: 90vw;
 }
 
 .editRemove{
@@ -61,5 +62,26 @@ Link{
 }
 
 .exportButton:hover{
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.logout-button{
+    margin: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: rgba(0, 0, 0, 0.25);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    color: white;
+    font-size: 1.4rem;
+    transition: all 0.3s ease-in-out;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}
+
+.logout-button:hover{
     background-color: rgba(0, 0, 0, 0.5);
 }
