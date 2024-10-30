@@ -36,7 +36,8 @@ function App() {
 	function logout() {
 		axios.post("/api/users/logout")
 			.then(() => {
-				console.log("Logout successful");
+				console.log("Logout successful")
+				navigate("/");
 			})
 			.catch(e => console.error(e))
 			.finally(() => setAppUser(null));
@@ -72,13 +73,14 @@ function App() {
 	return (
 		<>
 			<img src='./logo.png' alt="fv-leineck" width="150"/>
+			{appUser && <button className="logout-button" onClick={logout}>Logout</button>}
 			<Routes>
 				<Route path="/" element={<OrderPage appUser={appUser}/>}/>
 				<Route path="/login" element={<LoginPage login={login}/>}/>
 				<Route path="/register" element={<RegisterPage/>}/>
 				{appUser && isAuthorizedAdminGroup && (
 					<>
-						<Route path="/order-overview" element={<OrderOverviewPage/>}/>
+						<Route path="/order-overview" element={<OrderOverviewPage appUser={appUser}/>}/>
 						<Route path="/order-edit/:id" element={<EditPage orders={orders}/>}/>
 					</>
 				)}
