@@ -53,7 +53,7 @@ export default function OrderOverviewPage({appUser}: { appUser: AppUser }) {
 		getOrders();
 		getTotalQuantitySmoked();
 		getTotalQuantityFresh();
-	}, []);
+	}, [appUser]);
 	// Function to refresh the orders and total quantities
 	const handleRefresh = () => {
 		getOrders();
@@ -106,6 +106,7 @@ export default function OrderOverviewPage({appUser}: { appUser: AppUser }) {
 				console.error(error);
 			});
 	}
+	console.log(appUser);
 	if (!orders) {
 		return <h1>Lade...</h1>
 	}
