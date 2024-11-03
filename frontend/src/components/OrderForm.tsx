@@ -108,7 +108,7 @@ export default function OrderForm() {
 				<select id="pickupPlace" required value={pickupPlace} onChange={(e)=>setPickupPlace(e.target.value)}>
 					<option value="">Bitte wählen</option>
 					<option value="Weinstadt">Weinstadt</option>
-					<option value="Vereinsheim ">Vereinsheim</option>
+					<option value="Vereinsheim">Vereinsheim</option>
 				</select>
 			</div>
 			<div className="inputField">

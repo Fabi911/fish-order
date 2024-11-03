@@ -106,12 +106,10 @@ export default function OrderOverviewPage({appUser}: { appUser: AppUser }) {
 				console.error(error);
 			});
 	}
-	console.log(appUser);
 	if (!orders) {
 		return <h1>Lade...</h1>
 	}
 
-	console.log(appUser);
 	// Return the page
 	return (
 		<div className="pageContainer">

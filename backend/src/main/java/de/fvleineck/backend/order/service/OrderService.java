@@ -70,7 +70,7 @@ public class OrderService {
 		return orderRepository.save(editedOrder);
 	}
 
-		// Send an order confirmation email to the customer
+	// Send an order confirmation email to the customer
 	public void sendOrderConfirmationEmail(Order order) {
 		String subject = "Bestellbestätigung " + order.id();
 		StringBuilder textBuilder = new StringBuilder();
@@ -91,9 +91,11 @@ public class OrderService {
 				.append("<br><br>")
 				.append("Abholort: ")
 				.append(order.pickupPlace())
-				.append("<br>")
-				.append("Abholzeitraum: 09:00 - 12:00 Uhr<br>")
-				.append("<br><br>")
+				.append("<br>");
+		if ("Vereinsheim".equals(order.pickupPlace())) {
+			textBuilder.append("Abholzeitraum: 09:00 - 12:00 Uhr<br>");
+		}
+		textBuilder.append("<br><br>")
 				.append("Kommentar: ")
 				.append(order.comment())
 				.append("<br><br>")
