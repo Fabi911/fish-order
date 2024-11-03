@@ -1,7 +1,7 @@
 import './App.css';
 import OrderPage from "./pages/OrderPage.tsx";
 import OrderOverviewPage from "./pages/OrderOverviewPage.tsx";
-import {Route, Routes, useNavigate} from "react-router-dom";
+import {Link, Route, Routes, useNavigate} from "react-router-dom";
 import EditPage from "./pages/EditPage.tsx";
 import axios from "axios";
 import {useEffect, useState} from "react";
@@ -73,9 +73,13 @@ function App() {
 	return (
 		<>
 			<img src='./logo.png' alt="fv-leineck" width="150"/>
+			<div className="linkBox">
+			{appUser && <Link className="logout-button" to="/order-overview">Vereinsansicht</Link>}
+			{!appUser && <Link className="logout-button" to="/login">Vereinsansicht</Link>}
 			{appUser && <button className="logout-button" onClick={logout}>Logout</button>}
+			</div>
 			<Routes>
-				<Route path="/" element={<OrderPage appUser={appUser}/>}/>
+				<Route path="/" element={<OrderPage/>}/>
 				<Route path="/login" element={<LoginPage login={login}/>}/>
 				<Route path="/register" element={<RegisterPage/>}/>
 				{appUser && isAuthorizedAdminGroup && (

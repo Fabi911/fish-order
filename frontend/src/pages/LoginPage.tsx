@@ -1,5 +1,4 @@
 import {FormEvent, useState} from "react";
-import {Link} from "react-router-dom";
 import styled from "@emotion/styled";
 
 type LoginPageProps = {
@@ -24,7 +23,7 @@ export default function LoginPage(porps: LoginPageProps) {
 				<button type="submit">Login</button>
 			</Form>
 			<br/>
-			<Link to={"/register"}>Register</Link>
+			{/*<Link to={"/register"}>Register</Link>*/}
 		</>
 	)
 }

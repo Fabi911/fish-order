@@ -1,8 +1,7 @@
 import OrderForm from "../components/OrderForm.tsx";
 import './OrderPage.css';
-import {Link} from "react-router-dom";
-import {AppUser} from "../types/AppUser.ts";
-export default function OrderPage({appUser}: { appUser: AppUser | null }) {
+
+export default function OrderPage() {
 	return (
 		<>
 			<h1>Bestellung Forellenverkauf</h1>
@@ -14,9 +13,6 @@ export default function OrderPage({appUser}: { appUser: AppUser | null }) {
 			</article>
 			<OrderForm />
 			<br/>
-			{appUser&& <Link to="/order-overview">Zur Übersicht</Link>}
-
-			{!appUser&& <Link to="/login">Zur Übersicht</Link>}
 		</>
 	)
 }
