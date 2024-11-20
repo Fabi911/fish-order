@@ -31,7 +31,7 @@
     margin: 0;
     min-width: 32rem;
     font-size: 1.6rem;
-    width: 90vw;
+    width: 95vw;
 }
 
 .editRemove{
@@ -83,4 +83,13 @@ Link{
 
 .logout-button:hover{
     background-color: rgba(0, 0, 0, 0.5);
+}
+
+.closedOrders{
+    background-color: rgb(154, 21, 21);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    color: white;
+    font-size: 1.4rem;
+    margin: 5rem 0 1rem 0;
 }

@@ -6,6 +6,7 @@ import {DataGrid, GridColDef, GridRenderCellParams} from '@mui/x-data-grid';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import RefreshIcon from '@mui/icons-material/Refresh';
+import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import {Link} from "react-router-dom";
 import ExportToXLSX from "../components/ExportToXLSX.tsx";
 import {AppUser} from "../types/AppUser.ts";
@@ -38,7 +39,6 @@ export default function OrderOverviewPage({appUser}: { appUser: AppUser }) {
 		} catch (error) {
 			console.error(error);
 		}
-		;
 	}
 	const getTotalQuantityFresh = async () => {
 		try {
@@ -68,9 +68,8 @@ export default function OrderOverviewPage({appUser}: { appUser: AppUser }) {
 
 	function closedOrders() {
 		return orders?.filter(order => order.pickedUp) || [];
-	};
+	}
 	const closedOrdersList = closedOrders();
-
 	// Function to search orders by lastname, email or id
 	const searchOrders = (): Order[] => {
 		return openOrders()?.filter(order => {
@@ -87,11 +86,11 @@ export default function OrderOverviewPage({appUser}: { appUser: AppUser }) {
 			headerName: '',
 			width: 35,
 			renderCell: (params: GridRenderCellParams) => (
-					<button onClick={() => togglePickedUp(params.row.id)}><DeleteForeverIcon fontSize="large"/></button>)
+				<button onClick={() => togglePickedUp(params.row)}><ShoppingBasketIcon fontSize="large"/></button>)
 		},
 		{field: 'id', headerName: 'Bestellnummer', width: 150},
 		{field: 'lastname', headerName: 'Nachname', width: 200},
-		{field: 'firstname', headerName: 'Vorname', width: 200},
+		{field: 'firstname', headerName: 'Vorname', width: 150},
 		{field: 'email', headerName: 'E-Mail', width: 250},
 		{field: 'phone', headerName: 'Telefonnummer', width: 200},
 		{field: 'pickupPlace', headerName: 'Abholort', width: 120},
@@ -124,11 +123,27 @@ export default function OrderOverviewPage({appUser}: { appUser: AppUser }) {
 				console.error(error);
 			});
 	}
-
 	// Function to toggle the pickedUp status of an order
-	const togglePickedUp = (id: string) => {
-		axios.put(`/api/orders/${id}`)
-
+	const togglePickedUp = (order: Order) => {
+		axios.put(`/api/orders/${order.id}`, {
+			firstname: order.firstname,
+			lastname: order.lastname,
+			email: order.email,
+			phone: order.phone,
+			pickupPlace: order.pickupPlace,
+			comment: order.comment,
+			quantitySmoked: order.quantitySmoked,
+			quantityFresh: order.quantityFresh,
+			pickedUp: !order.pickedUp
+		})
+			.then(() => {
+				handleRefresh();
+			})
+			.catch(error => {
+				console.error(error);
+			});
+	}
+	// Return loading message if orders are not loaded yet
 	if (!orders) {
 		return <h1>Lade...</h1>
 	}
@@ -162,7 +177,7 @@ export default function OrderOverviewPage({appUser}: { appUser: AppUser }) {
 
 			{closedOrdersList.length > 0 &&
 				<>
-					<h3>Abgeschlossene Bestellungen</h3>
+					<h3 className={"closedOrders"}>Abgeschlossene Bestellungen</h3>
 					<DataGrid rows={closedOrdersList}
 					          columns={columns} getRowId={(row) => row.id}
 					          initialState={{
