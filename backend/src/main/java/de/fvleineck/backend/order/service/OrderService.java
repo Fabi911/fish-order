@@ -36,7 +36,7 @@ public class OrderService {
 		} while (orderRepository.existsById(orderId));
 		newOrder = new Order(orderId, newOrder.lastname(), newOrder.firstname(), newOrder.email(),
 				newOrder.phone(), newOrder.pickupPlace(), newOrder.comment(),
-				newOrder.quantitySmoked(), newOrder.quantityFresh());
+				newOrder.quantitySmoked(), newOrder.quantityFresh(), newOrder.pickedUp());
 		Order savedOrder = orderRepository.save(newOrder);
 		if (savedOrder != null) {
 			sendOrderConfirmationEmail(savedOrder);
@@ -65,7 +65,8 @@ public class OrderService {
 				updatedOrder.pickupPlace() != null ? updatedOrder.pickupPlace() : existingOrder.pickupPlace(),
 				updatedOrder.comment() != null ? updatedOrder.comment() : existingOrder.comment(),
 				updatedOrder.quantitySmoked() != null ? updatedOrder.quantitySmoked() : existingOrder.quantitySmoked(),
-				updatedOrder.quantityFresh() != null ? updatedOrder.quantityFresh() : existingOrder.quantityFresh()
+				updatedOrder.quantityFresh() != null ? updatedOrder.quantityFresh() : existingOrder.quantityFresh(),
+				updatedOrder.pickedUp() != null ? updatedOrder.pickedUp() : existingOrder.pickedUp()
 		);
 		return orderRepository.save(editedOrder);
 	}
