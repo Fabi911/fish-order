@@ -29,7 +29,8 @@ export default function OrderForm() {
 			pickupPlace,
 			comment,
 			quantitySmoked,
-			quantityFresh
+			quantityFresh,
+			pickedUp: false
 		}
 		postOrder(order,e);
 
@@ -44,6 +45,7 @@ export default function OrderForm() {
 			comment: order.comment,
 			quantitySmoked: order.quantitySmoked,
 			quantityFresh: order.quantityFresh,
+			pickedUp: false
 		})
 			.then(response => {
 				console.log('response: ',response);

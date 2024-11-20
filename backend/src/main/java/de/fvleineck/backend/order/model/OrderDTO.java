@@ -5,6 +5,7 @@ public record OrderDTO(
 		String firstname,
 		String email,
 		int quantitySmoked,
-		int quantityFresh
+		int quantityFresh,
+		Boolean pickedUp
 ) {
 }

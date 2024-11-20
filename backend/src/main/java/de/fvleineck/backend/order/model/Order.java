@@ -10,6 +10,7 @@ public record Order(
 		String pickupPlace,
 		String comment,
 		Integer quantitySmoked,
-		Integer quantityFresh
+		Integer quantityFresh,
+		Boolean pickedUp
 ) {
 }

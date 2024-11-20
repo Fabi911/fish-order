@@ -37,7 +37,8 @@ class OrderControllerTest {
 													"quantitySmoked": 1,
 													"quantityFresh": 2,
 													"pickupPlace": "home",
-													"comment": "no comment"
+													"comment": "no comment",
+													"pickedUp": false
 													}
 						"""))
 				.andExpect(MockMvcResultMatchers.status().isOk())
@@ -51,7 +52,8 @@ class OrderControllerTest {
 												"quantitySmoked": 1,
 												"quantityFresh": 2,
 												"pickupPlace": "home",
-												"comment": "no comment"
+												"comment": "no comment",
+												"pickedUp": false
 												}
 						"""));
 	}
@@ -79,8 +81,9 @@ class OrderControllerTest {
                         "phone": "0123456789",
                         "quantitySmoked": 1,
                         "quantityFresh": 2,
-							"pickupPlace": "home",
-							"comment": "no comment"
+						"pickupPlace": "home",
+						"comment": "no comment",
+						"pickedUp": false
                      }
             """))
 				.andExpect(MockMvcResultMatchers.status().isOk());

@@ -6,6 +6,7 @@ import {DataGrid, GridColDef, GridRenderCellParams} from '@mui/x-data-grid';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import RefreshIcon from '@mui/icons-material/Refresh';
+import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import {Link} from "react-router-dom";
 import ExportToXLSX from "../components/ExportToXLSX.tsx";
 import {AppUser} from "../types/AppUser.ts";
@@ -38,7 +39,6 @@ export default function OrderOverviewPage({appUser}: { appUser: AppUser }) {
 		} catch (error) {
 			console.error(error);
 		}
-		;
 	}
 	const getTotalQuantityFresh = async () => {
 		try {
@@ -60,9 +60,19 @@ export default function OrderOverviewPage({appUser}: { appUser: AppUser }) {
 		getTotalQuantitySmoked();
 		getTotalQuantityFresh();
 	};
+
+	// Function to filter orders by status picked up
+	function openOrders() {
+		return orders?.filter(order => !order.pickedUp);
+	}
+
+	function closedOrders() {
+		return orders?.filter(order => order.pickedUp) || [];
+	}
+	const closedOrdersList = closedOrders();
 	// Function to search orders by lastname, email or id
 	const searchOrders = (): Order[] => {
-		return orders?.filter(order => {
+		return openOrders()?.filter(order => {
 			const lowerCaseSearch = search.toLowerCase();
 			return order.lastname.toLowerCase().includes(lowerCaseSearch) ||
 				order.email.toLowerCase().includes(lowerCaseSearch) ||
@@ -71,9 +81,16 @@ export default function OrderOverviewPage({appUser}: { appUser: AppUser }) {
 	}
 	// Columns for the DataGrid
 	const columns: GridColDef[] = [
+		{
+			field: 'pickedUp',
+			headerName: '',
+			width: 35,
+			renderCell: (params: GridRenderCellParams) => (
+				<button onClick={() => togglePickedUp(params.row)}><ShoppingBasketIcon fontSize="large"/></button>)
+		},
 		{field: 'id', headerName: 'Bestellnummer', width: 150},
 		{field: 'lastname', headerName: 'Nachname', width: 200},
-		{field: 'firstname', headerName: 'Vorname', width: 200},
+		{field: 'firstname', headerName: 'Vorname', width: 150},
 		{field: 'email', headerName: 'E-Mail', width: 250},
 		{field: 'phone', headerName: 'Telefonnummer', width: 200},
 		{field: 'pickupPlace', headerName: 'Abholort', width: 120},
@@ -91,11 +108,11 @@ export default function OrderOverviewPage({appUser}: { appUser: AppUser }) {
 			headerName: '',
 			width: 70,
 			renderCell: (params: GridRenderCellParams) => (<div className="editRemove">
-				{appUser && appUser.role === "ADMIN" && <button onClick={() => handleDelete(params.row.id)}><DeleteForeverIcon fontSize="large"/></button>}
+				{appUser && appUser.role === "ADMIN" &&
+					<button onClick={() => handleDelete(params.row.id)}><DeleteForeverIcon fontSize="large"/></button>}
 				<Link to={`/order-edit/${params.row.id}`}><EditIcon fontSize="large"/></Link></div>)
 		}
 	];
-
 	// Functions to edit and delete orders
 	const handleDelete = (id: string) => {
 		axios.delete(`/api/orders/${id}`)
@@ -106,10 +123,30 @@ export default function OrderOverviewPage({appUser}: { appUser: AppUser }) {
 				console.error(error);
 			});
 	}
+	// Function to toggle the pickedUp status of an order
+	const togglePickedUp = (order: Order) => {
+		axios.put(`/api/orders/${order.id}`, {
+			firstname: order.firstname,
+			lastname: order.lastname,
+			email: order.email,
+			phone: order.phone,
+			pickupPlace: order.pickupPlace,
+			comment: order.comment,
+			quantitySmoked: order.quantitySmoked,
+			quantityFresh: order.quantityFresh,
+			pickedUp: !order.pickedUp
+		})
+			.then(() => {
+				handleRefresh();
+			})
+			.catch(error => {
+				console.error(error);
+			});
+	}
+	// Return loading message if orders are not loaded yet
 	if (!orders) {
 		return <h1>Lade...</h1>
 	}
-
 	// Return the page
 	return (
 		<div className="pageContainer">
@@ -136,6 +173,22 @@ export default function OrderOverviewPage({appUser}: { appUser: AppUser }) {
 					          },
 				          },
 			          }} sx={{fontSize: '1.4rem', borderColor: 'white', width: '100%'}}/>
+
+
+			{closedOrdersList.length > 0 &&
+				<>
+					<h3 className={"closedOrders"}>Abgeschlossene Bestellungen</h3>
+					<DataGrid rows={closedOrdersList}
+					          columns={columns} getRowId={(row) => row.id}
+					          initialState={{
+						          pagination: {
+							          paginationModel: {
+								          pageSize: 20,
+							          },
+						          },
+					          }} sx={{fontSize: '1.4rem', borderColor: 'white', width: '100%'}}/>
+				</>
+			}
 		</div>
 	)
 }

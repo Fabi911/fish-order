@@ -37,7 +37,8 @@ export default function EditForm({order}: Props) {
 			pickupPlace,
 			comment,
 			quantitySmoked,
-			quantityFresh
+			quantityFresh,
+			pickedUp: false
 		}
 		updateOrder(order,e);
 		navigate('/order-overview')

@@ -8,4 +8,5 @@ export type Order = {
 	quantitySmoked: number
 	quantityFresh: number
 	id?: string
+	pickedUp: boolean
 }
