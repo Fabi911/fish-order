@@ -93,8 +93,10 @@ public class OrderService {
 				.append("Abholort: ")
 				.append(order.pickupPlace())
 				.append("<br>");
-		if ("Vereinsheim".equals(order.pickupPlace())) {
+		if ("Vereinsheim am Leinecksee".equals(order.pickupPlace())) {
 			textBuilder.append("Abholzeitraum: 09:00 - 12:00 Uhr<br>");
+		} else if ("Weinstadt (Tanja & Ralph)".equals(order.pickupPlace())) {
+			textBuilder.append("Abholzeitraum: 10:30 - 11:30 Uhr gegenüber von Cabriobad.<br>");
 		}
 		textBuilder.append("<br><br>")
 				.append("Kommentar: ")

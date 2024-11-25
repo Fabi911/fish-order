@@ -126,8 +126,8 @@ export default function EditForm({order}: Props) {
 					<select id="pickupPlace" required value={pickupPlace}
 					        onChange={(e) => setPickupPlace(e.target.value)}>
 						<option value="">Bitte wählen</option>
-						<option value="Weinstadt">Weinstadt</option>
-						<option value="Vereinsheim ">Vereinsheim</option>
+						<option value="Weinstadt (Tanja & Ralph)">Weinstadt (Tanja & Ralph)</option>
+						<option value="Vereinsheim am Leinecksee">Vereinsheim am Leinecksee</option>
 					</select>
 				</div>
 				<div className="inputField">
