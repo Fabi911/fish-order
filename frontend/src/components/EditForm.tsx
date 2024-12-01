@@ -44,7 +44,6 @@ export default function EditForm({order}: Props) {
 		navigate('/order-overview')
 
 	}
-	console.log(order.id);
 
 	// Update order
 	const updateOrder = (order: Order , e: React.FormEvent<HTMLFormElement>): void => {

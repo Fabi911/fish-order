@@ -2,17 +2,34 @@ import './OrderPage.css';
 import {Order} from "../types/Order.ts";
 import EditForm from "../components/EditForm.tsx";
 import {Link, useParams} from "react-router-dom";
+import axios from "axios";
+import {useEffect, useState} from "react";
 
-interface EditPageProps {
-	orders: Order[];
-}
 
-export default function EditPage({ orders }: EditPageProps) {
+
+export default function EditPage() {
 	const {id} = useParams();
+	const [orders, setOrders] = useState<Order[] | undefined>([]);
+	// fetch orders from backend
+	const fetchOrders = () => {
+		axios.get('/api/orders')
+			.then(response => {
+				setOrders(response.data);
+			})
+			.catch(error => console.error(error));
+	}
+	useEffect(() => {
+		fetchOrders();
+	}, []);
+	if (!orders) {
+		return <h1>Bestellung nicht gefunden</h1>
+	}
 	const order = orders.find(order => order.id === id);
+
 	if (!order) {
 		return <h1>Bestellung nicht gefunden</h1>
 	}
+
 	return (
 		<>
 			<h1>Bestellung Forellenverkauf</h1>

@@ -109,13 +109,13 @@ export default function OrderOverviewPage({appUser}: { appUser: AppUser }) {
 			width: 70,
 			renderCell: (params: GridRenderCellParams) => (<div className="editRemove">
 				{appUser && appUser.role === "ADMIN" &&
-					<button onClick={() => handleDelete(params.row.id)}><DeleteForeverIcon fontSize="large"/></button>}
+					<button onClick={() => handleDelete(params.row)}><DeleteForeverIcon fontSize="large"/></button>}
 				<Link to={`/order-edit/${params.row.id}`}><EditIcon fontSize="large"/></Link></div>)
 		}
 	];
 	// Functions to edit and delete orders
-	const handleDelete = (id: string) => {
-		axios.delete(`/api/orders/${id}`)
+	const handleDelete = (order:Order) => {
+		axios.delete(`/api/orders/${order.id}`)
 			.then(() => {
 				handleRefresh();
 			})

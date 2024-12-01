@@ -73,7 +73,7 @@ public class OrderService {
 
 	// Send an order confirmation email to the customer
 	public void sendOrderConfirmationEmail(Order order) {
-		String subject = "Bestellbestätigung " + order.id();
+		String subject = "ForellenBestellbestätigung " + order.id();
 		StringBuilder textBuilder = new StringBuilder();
 		textBuilder.append("Danke für ihre Bestellung, ")
 				.append(order.firstname())
@@ -81,6 +81,7 @@ public class OrderService {
 				.append(order.lastname())
 				.append("!<br><br>") // Use <br> for line breaks
 				.append("Bestelldetails:<br>")
+				.append("Verkaufsdatum: Sonntag, 22.12.2024<br>")
 				.append("Bestellnummer: ")
 				.append(order.id())
 				.append("<br><br>")

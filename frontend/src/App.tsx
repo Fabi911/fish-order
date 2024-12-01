@@ -5,13 +5,12 @@ import {Link, Route, Routes, useNavigate} from "react-router-dom";
 import EditPage from "./pages/EditPage.tsx";
 import axios from "axios";
 import {useEffect, useState} from "react";
-import {Order} from "./types/Order.ts";
+
 import {AppUser} from "./types/AppUser.ts";
 import LoginPage from "./pages/LoginPage.tsx";
 import RegisterPage from "./pages/RegisterPage.tsx";
 
 function App() {
-	const [orders, setOrders] = useState<Order[]>([]);
 	const [appUser, setAppUser] = useState<AppUser | null>(null);
 	const navigate = useNavigate();
 
@@ -58,15 +57,8 @@ function App() {
 	}
 
 	// fetch orders from backend
-	const fetchOrders = () => {
-		axios.get('/api/orders')
-			.then(response => {
-				setOrders(response.data);
-			})
-			.catch(error => console.error(error));
-	}
+
 	useEffect(() => {
-		fetchOrders();
 		fetchMe();
 	}, []);
 	const isAuthorizedAdminGroup = appUser?.role === "ADMIN" || appUser?.role === "GROUP1";
@@ -85,7 +77,7 @@ function App() {
 				{appUser && isAuthorizedAdminGroup && (
 					<>
 						<Route path="/order-overview" element={<OrderOverviewPage appUser={appUser}/>}/>
-						<Route path="/order-edit/:id" element={<EditPage orders={orders}/>}/>
+						<Route path="/order-edit/:id" element={<EditPage/>}/>
 					</>
 				)}
 			</Routes>
