@@ -73,7 +73,7 @@ public class OrderService {
 
 	// Send an order confirmation email to the customer
 	public void sendOrderConfirmationEmail(Order order) {
-		String subject = "ForellenBestellbestätigung " + order.id();
+		String subject = "Bestellbestätigung " + order.id();
 		StringBuilder textBuilder = new StringBuilder();
 		textBuilder.append("Danke für ihre Bestellung, ")
 				.append(order.firstname())
