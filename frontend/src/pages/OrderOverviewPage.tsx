@@ -10,9 +10,7 @@ import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import {Link} from "react-router-dom";
 import ExportToXLSX from "../components/ExportToXLSX.tsx";
 import {AppUser} from "../types/AppUser.ts";
-import { ThemeProvider} from '@mui/material/styles';
 import '@mui/x-data-grid';
-
 
 declare module '@mui/material/styles' {
 	interface Components {
@@ -99,7 +97,8 @@ export default function OrderOverviewPage({appUser}: { appUser: AppUser }) {
 			headerName: '',
 			width: 35,
 			renderCell: (params: GridRenderCellParams) => (
-				<button onClick={() => togglePickedUp(params.row)}><ShoppingBasketIcon fontSize="large"/></button>)
+				<button onClick={() => togglePickedUp(params.row)}><ShoppingBasketIcon className="icons pickup"
+				                                                                       fontSize="large"/></button>)
 		},
 		{field: 'id', headerName: 'Bestellnummer', width: 150},
 		{field: 'lastname', headerName: 'Nachname', width: 200},
@@ -122,8 +121,10 @@ export default function OrderOverviewPage({appUser}: { appUser: AppUser }) {
 			width: 70,
 			renderCell: (params: GridRenderCellParams) => (<div className="editRemove">
 				{appUser && appUser.role === "ADMIN" &&
-					<button onClick={() => handleDelete(params.row)}><DeleteForeverIcon fontSize="large"/></button>}
-				<Link to={`/order-edit/${params.row.id}`}><EditIcon fontSize="large"/></Link></div>)
+					<button onClick={() => handleDelete(params.row)}><DeleteForeverIcon className="icons delete"
+					                                                                    fontSize="large"/></button>}
+				<Link to={`/order-edit/${params.row.id}`}><EditIcon className="icons edit" fontSize="large"/></Link>
+			</div>)
 		}
 	];
 	// Functions to edit and delete orders
@@ -156,51 +157,6 @@ export default function OrderOverviewPage({appUser}: { appUser: AppUser }) {
 				console.error(error);
 			});
 	}
-	/*const theme = createTheme({
-		components: {
-			MuiDataGrid: {
-				styleOverrides: {
-
-					root: {
-						fontSize: '1.4rem',
-						borderColor: 'white',
-						width: '100%',
-					},
-					columnHeaders: {
-						backgroundColor: '#e5e5db !important',
-						color: 'black',
-						fontSize: '1.4rem',
-					},
-					columnHeaderTitle: {
-						fontWeight: 'bold',
-					},
-					columnHeader: {
-						borderBottom: '1px solid red',
-					},
-					footerContainer: {
-						backgroundColor: '#e5e5db',
-					},
-					tablePagination: {
-						displayedRows: {
-							fontSize: '1.4rem',
-						},
-					},
-				},
-			},
-			MuiButtonBase: {
-				styleOverrides: {
-					root: {
-						'&.Mui-disabled': {
-							fontSize: '1.4rem',
-							color: 'black',
-						},
-					},
-				},
-			},
-		},
-	});*/
-
-
 // Return loading message if orders are not loaded yet
 	if (!orders) {
 		return <h1>Lade...</h1>
@@ -208,7 +164,7 @@ export default function OrderOverviewPage({appUser}: { appUser: AppUser }) {
 // Return the page
 	return (
 		<div className="pageContainer">
-			<h1>Bestellungen</h1>
+			<h1>Bestellübersicht</h1>
 			<article className="quantityBox">
 				<h2>Gesamtmenge</h2>
 				<p>Geräucherte Forellen: <b>{totalSmoked}</b></p>
@@ -216,76 +172,124 @@ export default function OrderOverviewPage({appUser}: { appUser: AppUser }) {
 				<p>Gesamt: <b>{totalSmoked + totalFresh}</b></p>
 			</article>
 			<div className="searchContainer">
-				<Link to="/">zum Bestellformular</Link>
+				<Link className="exportButton link" to="/">zum Bestellformular</Link>
 				<input className="search" type="search" placeholder="Suche..."
 				       onChange={event => setSearch(event.target.value)}/>
 				<ExportToXLSX data={orders} totalSmoked={totalSmoked} totalFresh={totalFresh}/>
 				<button className="exportButton" onClick={handleRefresh}><RefreshIcon fontSize="large"/></button>
 
 			</div>
-			{/*<ThemeProvider theme={theme}>*/}
-				<DataGrid
-					rows={searchOrders()}
-					columns={columns}
-					getRowId={(row) => row.id}
-					initialState={{
-						pagination: {
-							paginationModel: {
-								pageSize: 15,
-							},
+			<DataGrid
+				rows={searchOrders()}
+				columns={columns}
+				getRowId={(row) => row.id}
+				initialState={{
+					pagination: {
+						paginationModel: {
+							pageSize: 15,
 						},
-					}}
-					sx={{fontSize: '1.4rem',
-						width: '100%',
-						'& .MuiDataGrid-row': {
-							backgroundColor: 'white',
-						},
-						'& .MuiDataGrid-row:hover': {
-							backgroundColor: 'rgb(250, 250, 210)', // Hover-Effekt für Zeilen
-						},
-						'& .MuiDataGrid-columnHeaders': {
-							backgroundColor: '#e5e5db !important',
-							color: 'black',
-							fontSize: '1.4rem',
-						},
-						'& .MuiDataGrid-columnHeaderTitle': {
-							fontWeight: 'bold',
-						},
-						'& .MuiDataGrid-columnHeader': {
-							borderBottom: '1px solid red',
-						},
-						'& .MuiDataGrid-footerContainer': {
-							backgroundColor: '#e5e5db',
-						},
-						'& .MuiTablePagination-displayedRows': {
-							fontSize: '1.4rem',
-						},
-						'& .MuiButtonBase-root.Mui-disabled': {
-							fontSize: '1.4rem',
-							color: 'black',
-						},
-					}}
-				/>
-			{/*</ThemeProvider>*/}
+					},
+				}}
+				sx={{
+					fontSize: '1.4rem',
+					width: '100%',
+					'--DataGrid-containerBackground': 'transparent!important',
+					'& .MuiDataGrid-row': {
+						backgroundColor: 'white',
+						'&:hover': {
+							backgroundColor: '#bbbb9b',
+						}
+					},
+					'& .MuiDataGrid-row.Mui-selected': {
+						backgroundColor: '#FAFAD2',
+						'&:hover': {
+							backgroundColor: '#bbbb9b',
+						}
+					},
+					'& .MuiDataGrid-columnHeaders': {
+						backgroundColor: '#e5e5db !important',
+						color: 'black',
+						fontSize: '1.4rem',
+					},
+					'& .MuiDataGrid-columnHeaderTitle': {
+						fontWeight: 'bold',
+					},
+					'& .MuiDataGrid-columnHeader': {
+						borderBottom: '1px solid red',
+					},
+					'& .MuiDataGrid-footerContainer': {
+						backgroundColor: '#e5e5db',
+					},
+					'& .MuiTablePagination-displayedRows': {
+						fontSize: '1.4rem',
+					},
+					'& .MuiButtonBase-root.Mui-disabled': {
+						fontSize: '1.4rem',
+						color: 'black',
+					},
+					'& .MuiTablePagination-actions': {
+						cursor: 'pointer',
+					},
+				}}
+			/>
 
 
 			{closedOrdersList.length > 0 &&
 				<>
 					<h3 className={"closedOrders"}>Abgeschlossene Bestellungen</h3>
-					<ThemeProvider theme={theme}>
-						<DataGrid
-							rows={closedOrders()}
-							columns={columns}
-							getRowId={(row) => row.id}
-							initialState={{
-								pagination: {
-									paginationModel: {
-										pageSize: 15,
-									},
+					<DataGrid
+						rows={closedOrders()}
+						columns={columns}
+						getRowId={(row) => row.id}
+						initialState={{
+							pagination: {
+								paginationModel: {
+									pageSize: 15,
 								},
-							}}
-						/>
-					</ThemeProvider>
+							},
+						}}
+						sx={{
+							fontSize: '1.4rem',
+							width: '100%',
+							'--DataGrid-containerBackground': 'transparent!important',
+							'& .MuiDataGrid-row': {
+								backgroundColor: 'white',
+								'&:hover': {
+									backgroundColor: '#bbbb9b',
+								}
+							},
+							'& .MuiDataGrid-row.Mui-selected': {
+								backgroundColor: '#FAFAD2',
+								'&:hover': {
+									backgroundColor: '#bbbb9b',
+								}
+							},
+							'& .MuiDataGrid-columnHeaders': {
+								backgroundColor: '#e5e5db !important',
+								color: 'black',
+								fontSize: '1.4rem',
+							},
+							'& .MuiDataGrid-columnHeaderTitle': {
+								fontWeight: 'bold',
+							},
+							'& .MuiDataGrid-columnHeader': {
+								borderBottom: '1px solid red',
+							},
+							'& .MuiDataGrid-footerContainer': {
+								backgroundColor: '#e5e5db',
+							},
+							'& .MuiTablePagination-displayedRows': {
+								fontSize: '1.4rem',
+							},
+							'& .MuiButtonBase-root.Mui-disabled': {
+								fontSize: '1.4rem',
+								color: 'black',
+							},
+							'& .MuiTablePagination-actions': {
+								cursor: 'pointer',
+							},
+						}}
+					/>
 				</>
 			}
 		</div>
