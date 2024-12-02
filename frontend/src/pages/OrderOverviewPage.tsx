@@ -10,7 +10,19 @@ import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import {Link} from "react-router-dom";
 import ExportToXLSX from "../components/ExportToXLSX.tsx";
 import {AppUser} from "../types/AppUser.ts";
+import { ThemeProvider} from '@mui/material/styles';
+import '@mui/x-data-grid';
 
+
+declare module '@mui/material/styles' {
+	interface Components {
+		MuiDataGrid?: {
+			styleOverrides?: {
+				[key: string]: object;
+			};
+		};
+	}
+}
 export default function OrderOverviewPage({appUser}: { appUser: AppUser }) {
 	const [orders, setOrders] = useState<Order[] | null>(null);
 	const [totalSmoked, setTotalSmoked] = useState<number>(0);
@@ -69,6 +81,7 @@ export default function OrderOverviewPage({appUser}: { appUser: AppUser }) {
 	function closedOrders() {
 		return orders?.filter(order => order.pickedUp) || [];
 	}
+
 	const closedOrdersList = closedOrders();
 	// Function to search orders by lastname, email or id
 	const searchOrders = (): Order[] => {
@@ -114,7 +127,7 @@ export default function OrderOverviewPage({appUser}: { appUser: AppUser }) {
 		}
 	];
 	// Functions to edit and delete orders
-	const handleDelete = (order:Order) => {
+	const handleDelete = (order: Order) => {
 		axios.delete(`/api/orders/${order.id}`)
 			.then(() => {
 				handleRefresh();
@@ -143,11 +156,56 @@ export default function OrderOverviewPage({appUser}: { appUser: AppUser }) {
 				console.error(error);
 			});
 	}
-	// Return loading message if orders are not loaded yet
+	/*const theme = createTheme({
+		components: {
+			MuiDataGrid: {
+				styleOverrides: {
+
+					root: {
+						fontSize: '1.4rem',
+						borderColor: 'white',
+						width: '100%',
+					},
+					columnHeaders: {
+						backgroundColor: '#e5e5db !important',
+						color: 'black',
+						fontSize: '1.4rem',
+					},
+					columnHeaderTitle: {
+						fontWeight: 'bold',
+					},
+					columnHeader: {
+						borderBottom: '1px solid red',
+					},
+					footerContainer: {
+						backgroundColor: '#e5e5db',
+					},
+					tablePagination: {
+						displayedRows: {
+							fontSize: '1.4rem',
+						},
+					},
+				},
+			},
+			MuiButtonBase: {
+				styleOverrides: {
+					root: {
+						'&.Mui-disabled': {
+							fontSize: '1.4rem',
+							color: 'black',
+						},
+					},
+				},
+			},
+		},
+	});*/
+
+
+// Return loading message if orders are not loaded yet
 	if (!orders) {
 		return <h1>Lade...</h1>
 	}
-	// Return the page
+// Return the page
 	return (
 		<div className="pageContainer">
 			<h1>Bestellungen</h1>
@@ -165,28 +223,69 @@ export default function OrderOverviewPage({appUser}: { appUser: AppUser }) {
 				<button className="exportButton" onClick={handleRefresh}><RefreshIcon fontSize="large"/></button>
 
 			</div>
-			<DataGrid rows={searchOrders()} columns={columns} getRowId={(row) => row.id}
-			          initialState={{
-				          pagination: {
-					          paginationModel: {
-						          pageSize: 20,
-					          },
-				          },
-			          }} sx={{fontSize: '1.4rem', borderColor: 'white', width: '100%'}}/>
+			{/*<ThemeProvider theme={theme}>*/}
+				<DataGrid
+					rows={searchOrders()}
+					columns={columns}
+					getRowId={(row) => row.id}
+					initialState={{
+						pagination: {
+							paginationModel: {
+								pageSize: 15,
+							},
+						},
+					}}
+					sx={{fontSize: '1.4rem',
+						width: '100%',
+						'& .MuiDataGrid-row': {
+							backgroundColor: 'white',
+						},
+						'& .MuiDataGrid-row:hover': {
+							backgroundColor: 'rgb(250, 250, 210)', // Hover-Effekt für Zeilen
+						},
+						'& .MuiDataGrid-columnHeaders': {
+							backgroundColor: '#e5e5db !important',
+							color: 'black',
+							fontSize: '1.4rem',
+						},
+						'& .MuiDataGrid-columnHeaderTitle': {
+							fontWeight: 'bold',
+						},
+						'& .MuiDataGrid-columnHeader': {
+							borderBottom: '1px solid red',
+						},
+						'& .MuiDataGrid-footerContainer': {
+							backgroundColor: '#e5e5db',
+						},
+						'& .MuiTablePagination-displayedRows': {
+							fontSize: '1.4rem',
+						},
+						'& .MuiButtonBase-root.Mui-disabled': {
+							fontSize: '1.4rem',
+							color: 'black',
+						},
+					}}
+				/>
+			{/*</ThemeProvider>*/}
 
 
 			{closedOrdersList.length > 0 &&
 				<>
 					<h3 className={"closedOrders"}>Abgeschlossene Bestellungen</h3>
-					<DataGrid rows={closedOrdersList}
-					          columns={columns} getRowId={(row) => row.id}
-					          initialState={{
-						          pagination: {
-							          paginationModel: {
-								          pageSize: 20,
-							          },
-						          },
-					          }} sx={{fontSize: '1.4rem', borderColor: 'white', width: '100%'}}/>
+					<ThemeProvider theme={theme}>
+						<DataGrid
+							rows={closedOrders()}
+							columns={columns}
+							getRowId={(row) => row.id}
+							initialState={{
+								pagination: {
+									paginationModel: {
+										pageSize: 15,
+									},
+								},
+							}}
+						/>
+					</ThemeProvider>
 				</>
 			}
 		</div>
