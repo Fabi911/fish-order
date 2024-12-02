@@ -6,7 +6,8 @@ import {DataGrid, GridColDef, GridRenderCellParams} from '@mui/x-data-grid';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import RefreshIcon from '@mui/icons-material/Refresh';
-import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 import {Link} from "react-router-dom";
 import ExportToXLSX from "../components/ExportToXLSX.tsx";
 import {AppUser} from "../types/AppUser.ts";
@@ -97,8 +98,7 @@ export default function OrderOverviewPage({appUser}: { appUser: AppUser }) {
 			headerName: '',
 			width: 35,
 			renderCell: (params: GridRenderCellParams) => (
-				<button onClick={() => togglePickedUp(params.row)}><ShoppingBasketIcon className="icons pickup"
-				                                                                       fontSize="large"/></button>)
+				<button onClick={() => togglePickedUp(params.row)}>{params.row.pickedUp? <ArrowCircleUpIcon className="icons cancel" fontSize="large"/> :<CheckCircleIcon className="icons pickup" fontSize="large"/>}</button>)
 		},
 		{field: 'id', headerName: 'Bestellnummer', width: 150},
 		{field: 'lastname', headerName: 'Nachname', width: 200},
@@ -164,7 +164,7 @@ export default function OrderOverviewPage({appUser}: { appUser: AppUser }) {
 // Return the page
 	return (
 		<div className="pageContainer">
-			<h1>Bestellübersicht</h1>
+			<h1 className="headline-overview">Bestellübersicht</h1>
 			<article className="quantityBox">
 				<h2>Gesamtmenge</h2>
 				<p>Geräucherte Forellen: <b>{totalSmoked}</b></p>
