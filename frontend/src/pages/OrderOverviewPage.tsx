@@ -6,11 +6,22 @@ import {DataGrid, GridColDef, GridRenderCellParams} from '@mui/x-data-grid';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import RefreshIcon from '@mui/icons-material/Refresh';
-import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 import {Link} from "react-router-dom";
 import ExportToXLSX from "../components/ExportToXLSX.tsx";
 import {AppUser} from "../types/AppUser.ts";
+import '@mui/x-data-grid';
 
+declare module '@mui/material/styles' {
+	interface Components {
+		MuiDataGrid?: {
+			styleOverrides?: {
+				[key: string]: object;
+			};
+		};
+	}
+}
 export default function OrderOverviewPage({appUser}: { appUser: AppUser }) {
 	const [orders, setOrders] = useState<Order[] | null>(null);
 	const [totalSmoked, setTotalSmoked] = useState<number>(0);
@@ -69,6 +80,7 @@ export default function OrderOverviewPage({appUser}: { appUser: AppUser }) {
 	function closedOrders() {
 		return orders?.filter(order => order.pickedUp) || [];
 	}
+
 	const closedOrdersList = closedOrders();
 	// Function to search orders by lastname, email or id
 	const searchOrders = (): Order[] => {
@@ -86,7 +98,7 @@ export default function OrderOverviewPage({appUser}: { appUser: AppUser }) {
 			headerName: '',
 			width: 35,
 			renderCell: (params: GridRenderCellParams) => (
-				<button onClick={() => togglePickedUp(params.row)}><ShoppingBasketIcon fontSize="large"/></button>)
+				<button onClick={() => togglePickedUp(params.row)}>{params.row.pickedUp? <ArrowCircleUpIcon className="icons cancel" fontSize="large"/> :<CheckCircleIcon className="icons pickup" fontSize="large"/>}</button>)
 		},
 		{field: 'id', headerName: 'Bestellnummer', width: 150},
 		{field: 'lastname', headerName: 'Nachname', width: 200},
@@ -109,12 +121,14 @@ export default function OrderOverviewPage({appUser}: { appUser: AppUser }) {
 			width: 70,
 			renderCell: (params: GridRenderCellParams) => (<div className="editRemove">
 				{appUser && appUser.role === "ADMIN" &&
-					<button onClick={() => handleDelete(params.row)}><DeleteForeverIcon fontSize="large"/></button>}
-				<Link to={`/order-edit/${params.row.id}`}><EditIcon fontSize="large"/></Link></div>)
+					<button onClick={() => handleDelete(params.row)}><DeleteForeverIcon className="icons delete"
+					                                                                    fontSize="large"/></button>}
+				<Link to={`/order-edit/${params.row.id}`}><EditIcon className="icons edit" fontSize="large"/></Link>
+			</div>)
 		}
 	];
 	// Functions to edit and delete orders
-	const handleDelete = (order:Order) => {
+	const handleDelete = (order: Order) => {
 		axios.delete(`/api/orders/${order.id}`)
 			.then(() => {
 				handleRefresh();
@@ -143,14 +157,14 @@ export default function OrderOverviewPage({appUser}: { appUser: AppUser }) {
 				console.error(error);
 			});
 	}
-	// Return loading message if orders are not loaded yet
+// Return loading message if orders are not loaded yet
 	if (!orders) {
 		return <h1>Lade...</h1>
 	}
-	// Return the page
+// Return the page
 	return (
 		<div className="pageContainer">
-			<h1>Bestellungen</h1>
+			<h1 className="headline-overview">Bestellübersicht</h1>
 			<article className="quantityBox">
 				<h2>Gesamtmenge</h2>
 				<p>Geräucherte Forellen: <b>{totalSmoked}</b></p>
@@ -158,35 +172,124 @@ export default function OrderOverviewPage({appUser}: { appUser: AppUser }) {
 				<p>Gesamt: <b>{totalSmoked + totalFresh}</b></p>
 			</article>
 			<div className="searchContainer">
-				<Link to="/">zum Bestellformular</Link>
+				<Link className="exportButton link" to="/">zum Bestellformular</Link>
 				<input className="search" type="search" placeholder="Suche..."
 				       onChange={event => setSearch(event.target.value)}/>
 				<ExportToXLSX data={orders} totalSmoked={totalSmoked} totalFresh={totalFresh}/>
 				<button className="exportButton" onClick={handleRefresh}><RefreshIcon fontSize="large"/></button>
 
 			</div>
-			<DataGrid rows={searchOrders()} columns={columns} getRowId={(row) => row.id}
-			          initialState={{
-				          pagination: {
-					          paginationModel: {
-						          pageSize: 20,
-					          },
-				          },
-			          }} sx={{fontSize: '1.4rem', borderColor: 'white', width: '100%'}}/>
+			<DataGrid
+				rows={searchOrders()}
+				columns={columns}
+				getRowId={(row) => row.id}
+				initialState={{
+					pagination: {
+						paginationModel: {
+							pageSize: 15,
+						},
+					},
+				}}
+				sx={{
+					fontSize: '1.4rem',
+					width: '100%',
+					'--DataGrid-containerBackground': 'transparent!important',
+					'& .MuiDataGrid-row': {
+						backgroundColor: 'white',
+						'&:hover': {
+							backgroundColor: '#bbbb9b',
+						}
+					},
+					'& .MuiDataGrid-row.Mui-selected': {
+						backgroundColor: '#FAFAD2',
+						'&:hover': {
+							backgroundColor: '#bbbb9b',
+						}
+					},
+					'& .MuiDataGrid-columnHeaders': {
+						backgroundColor: '#e5e5db !important',
+						color: 'black',
+						fontSize: '1.4rem',
+					},
+					'& .MuiDataGrid-columnHeaderTitle': {
+						fontWeight: 'bold',
+					},
+					'& .MuiDataGrid-columnHeader': {
+						borderBottom: '1px solid red',
+					},
+					'& .MuiDataGrid-footerContainer': {
+						backgroundColor: '#e5e5db',
+					},
+					'& .MuiTablePagination-displayedRows': {
+						fontSize: '1.4rem',
+					},
+					'& .MuiButtonBase-root.Mui-disabled': {
+						fontSize: '1.4rem',
+						color: 'black',
+					},
+					'& .MuiTablePagination-actions': {
+						cursor: 'pointer',
+					},
+				}}
+			/>
 
 
 			{closedOrdersList.length > 0 &&
 				<>
 					<h3 className={"closedOrders"}>Abgeschlossene Bestellungen</h3>
-					<DataGrid rows={closedOrdersList}
-					          columns={columns} getRowId={(row) => row.id}
-					          initialState={{
-						          pagination: {
-							          paginationModel: {
-								          pageSize: 20,
-							          },
-						          },
-					          }} sx={{fontSize: '1.4rem', borderColor: 'white', width: '100%'}}/>
+					<DataGrid
+						rows={closedOrders()}
+						columns={columns}
+						getRowId={(row) => row.id}
+						initialState={{
+							pagination: {
+								paginationModel: {
+									pageSize: 15,
+								},
+							},
+						}}
+						sx={{
+							fontSize: '1.4rem',
+							width: '100%',
+							'--DataGrid-containerBackground': 'transparent!important',
+							'& .MuiDataGrid-row': {
+								backgroundColor: 'white',
+								'&:hover': {
+									backgroundColor: '#bbbb9b',
+								}
+							},
+							'& .MuiDataGrid-row.Mui-selected': {
+								backgroundColor: '#FAFAD2',
+								'&:hover': {
+									backgroundColor: '#bbbb9b',
+								}
+							},
+							'& .MuiDataGrid-columnHeaders': {
+								backgroundColor: '#e5e5db !important',
+								color: 'black',
+								fontSize: '1.4rem',
+							},
+							'& .MuiDataGrid-columnHeaderTitle': {
+								fontWeight: 'bold',
+							},
+							'& .MuiDataGrid-columnHeader': {
+								borderBottom: '1px solid red',
+							},
+							'& .MuiDataGrid-footerContainer': {
+								backgroundColor: '#e5e5db',
+							},
+							'& .MuiTablePagination-displayedRows': {
+								fontSize: '1.4rem',
+							},
+							'& .MuiButtonBase-root.Mui-disabled': {
+								fontSize: '1.4rem',
+								color: 'black',
+							},
+							'& .MuiTablePagination-actions': {
+								cursor: 'pointer',
+							},
+						}}
+					/>
 				</>
 			}
 		</div>

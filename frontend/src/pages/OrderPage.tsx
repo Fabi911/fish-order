@@ -4,7 +4,7 @@ import './OrderPage.css';
 export default function OrderPage() {
 	return (
 		<>
-			<h1>Bestellung Forellenverkauf</h1>
+			<h1 className="orderPage">Bestellung Forellenverkauf</h1>
 			<article className="article">
 				<h2>für den 22.12.2024</h2>
 				<h3>Preise:</h3>

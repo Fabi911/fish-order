@@ -5,7 +5,6 @@ import {Link, Route, Routes, useNavigate} from "react-router-dom";
 import EditPage from "./pages/EditPage.tsx";
 import axios from "axios";
 import {useEffect, useState} from "react";
-
 import {AppUser} from "./types/AppUser.ts";
 import LoginPage from "./pages/LoginPage.tsx";
 import RegisterPage from "./pages/RegisterPage.tsx";
