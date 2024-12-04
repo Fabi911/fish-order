@@ -65,7 +65,7 @@ function App() {
 	return (
 		<>
 			<ToastContainer
-				position="top-center"
+				position="bottom-center"
 				autoClose={5000}
 				newestOnTop={false}
 				closeOnClick
