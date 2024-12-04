@@ -1,5 +1,6 @@
 import OrderForm from "../components/OrderForm.tsx";
 import './OrderPage.css';
+import "react-toastify/dist/ReactToastify.css";
 
 export default function OrderPage() {
 	return (

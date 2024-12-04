@@ -8,6 +8,7 @@ import {useEffect, useState} from "react";
 import {AppUser} from "./types/AppUser.ts";
 import LoginPage from "./pages/LoginPage.tsx";
 import RegisterPage from "./pages/RegisterPage.tsx";
+import {Slide, ToastContainer} from "react-toastify";
 
 function App() {
 	const [appUser, setAppUser] = useState<AppUser | null>(null);
@@ -63,6 +64,18 @@ function App() {
 	const isAuthorizedAdminGroup = appUser?.role === "ADMIN" || appUser?.role === "GROUP1";
 	return (
 		<>
+			<ToastContainer
+				position="top-center"
+				autoClose={5000}
+				newestOnTop={false}
+				closeOnClick
+				rtl={false}
+				pauseOnFocusLoss
+				draggable
+				pauseOnHover
+				theme="light"
+				transition={Slide}
+			/>
 			<img src='./logo.png' alt="fv-leineck" width="150"/>
 			<div className="linkBox">
 			{appUser && <Link className="logout-button" to="/order-overview">Vereinsansicht</Link>}

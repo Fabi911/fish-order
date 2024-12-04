@@ -12,6 +12,7 @@ import {Link} from "react-router-dom";
 import ExportToXLSX from "../components/ExportToXLSX.tsx";
 import {AppUser} from "../types/AppUser.ts";
 import '@mui/x-data-grid';
+import {toast} from "react-toastify";
 
 declare module '@mui/material/styles' {
 	interface Components {
@@ -132,6 +133,7 @@ export default function OrderOverviewPage({appUser}: { appUser: AppUser }) {
 		axios.delete(`/api/orders/${order.id}`)
 			.then(() => {
 				handleRefresh();
+				toast.success("Bestellung erfolgreich gelöscht!");
 			})
 			.catch(error => {
 				console.error(error);

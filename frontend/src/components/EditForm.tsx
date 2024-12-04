@@ -5,6 +5,7 @@ import './OrderForm.css';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox';
 import {useNavigate} from "react-router-dom";
+import {toast} from "react-toastify";
 
 interface Props {
 	order: Order;
@@ -21,7 +22,6 @@ export default function EditForm({order}: Props) {
 	const [quantityFresh, setQuantityFresh] = useState<number>(order.quantityFresh);
 	const [pickupPlace, setPickupPlace] = useState<string>(order.pickupPlace);
 	const [comment, setComment] = useState<string>(order.comment);
-	const [responseMessage, setResponseMessage] = useState<string>('');
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		if (!pickupPlace) {
@@ -47,6 +47,7 @@ export default function EditForm({order}: Props) {
 
 	// Update order
 	const updateOrder = (order: Order , e: React.FormEvent<HTMLFormElement>): void => {
+		toast.promise(
 		axios.put(`/api/orders/${order.id}`, {
 			firstname: order.firstname,
 			lastname: order.lastname,
@@ -68,11 +69,14 @@ export default function EditForm({order}: Props) {
 				setQuantitySmoked(0);
 				setQuantityFresh(0);
 				e.currentTarget?.reset();
-				setResponseMessage('Bearbeitung war erfolgreich!');
+			}),
+			{
+				pending: "Änderungen werden übermittelt...",
+				success: "Bestellung erfolgreich bearbeitet.",
+				error: "Fehlgeschlagen! Bitte versuchen Sie es später erneut. 🤯"
 			})
 			.catch(error => {
 				console.error(error);
-				setResponseMessage('Bearbeitung fehlgeschlagen!');
 			});
 	}
 
@@ -136,7 +140,6 @@ export default function EditForm({order}: Props) {
 				</div>
 				<button className="orderButton" type="submit">Ändern</button>
 			</form>
-			{responseMessage && <p>{responseMessage}</p>}
 		</>
 	)
 }
