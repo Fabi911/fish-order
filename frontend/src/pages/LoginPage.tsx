@@ -20,9 +20,13 @@ export default function LoginPage(porps: LoginPageProps) {
 				       onChange={(e) => setUsername(e.target.value)}/>
 				<input type="password" placeholder="Password" value={password}
 				       onChange={(e) => setPassword(e.target.value)}/>
-				<button type="submit">Login</button>
+				<button className="exportButton" type="submit">Login</button>
 			</Form>
+			<article> {/*für Bestellprozess aktivieren*/}
+				<p>Vielen Dank für Ihre Bestellungen!<br/>
+				Es können keine weiteren Bestellungen mehr aufgenommen werden.</p>
 			<br/>
+			</article>
 			{/*<Link to={"/register"}>Register</Link>*/}
 		</>
 	)
@@ -35,5 +39,5 @@ const Form = styled.form`
 	flex-direction: column;
 	gap: 0.5rem;
 	width: 200px;
-	margin: 0 auto;
+	margin: 2rem auto 1rem auto;
 `;

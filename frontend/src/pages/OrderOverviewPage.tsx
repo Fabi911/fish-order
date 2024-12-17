@@ -174,7 +174,7 @@ export default function OrderOverviewPage({appUser}: { appUser: AppUser }) {
 				<p>Gesamt: <b>{totalSmoked + totalFresh}</b></p>
 			</article>
 			<div className="searchContainer">
-				<Link className="exportButton link" to="/">zum Bestellformular</Link>
+				<Link className="exportButton link" to="/orderpage">zum Bestellformular</Link>
 				<input className="search" type="search" placeholder="Suche..."
 				       onChange={event => setSearch(event.target.value)}/>
 				<ExportToXLSX data={orders} totalSmoked={totalSmoked} totalFresh={totalFresh}/>
