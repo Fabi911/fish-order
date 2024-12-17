@@ -14,6 +14,7 @@ function App() {
 	const [appUser, setAppUser] = useState<AppUser | null>(null);
 	const navigate = useNavigate();
 
+	// basic auth
 	function login(username: string, password: string) {
 		axios.post("/api/users/login", {}, {
 			auth: {
@@ -55,9 +56,7 @@ function App() {
 			setAppUser(null);
 		}
 	}
-
-	// fetch orders from backend
-
+	// end basic auth
 	useEffect(() => {
 		fetchMe();
 	}, []);
