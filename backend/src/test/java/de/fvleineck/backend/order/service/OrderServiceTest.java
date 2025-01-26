@@ -16,7 +16,7 @@ class OrderServiceTest {
 	@Test
 	void testCreateOrder() {
 		Order order = new Order(null, "lastname", "firstname", "email","0123456789", "home", "", 1, 1,false);
-		Order savedOrder = new Order("0001-20241222", "lastname", "firstname", "email", "0123456789","home", "", 1, 1
+		Order savedOrder = new Order("0001-20250418", "lastname", "firstname", "email", "0123456789","home", "", 1, 1
 				,false);
 		when(mockOrderRepository.save(any(Order.class))).thenReturn(savedOrder);
 

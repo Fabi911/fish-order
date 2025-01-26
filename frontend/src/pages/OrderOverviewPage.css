@@ -1,7 +1,7 @@
 .headline-overview{
     font-size: 2.6rem;
     padding: 0.5rem 1rem;
-    background-color: rgba(0, 0, 0, 0.25);
+    background-color: rgba(38, 121, 236, 0.88);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -35,7 +35,7 @@
     width: 30rem;
     align-self: flex-start;
     padding: 0.5rem 1rem;
-    background-color: rgba(0, 0, 0, 0.25);
+    background-color: rgba(38, 121, 236, 0.88);
     border-radius: 0.5rem;
     color: #ffffff;
     box-shadow: 0 0 0.5rem 0.1rem rgba(0, 0, 0, 0.55);
@@ -89,7 +89,7 @@ Link{
 
 .logout-button{
     padding: 0.5rem 1rem;
-    background-color: rgba(0, 0, 0, 0.25);
+    background-color: rgba(38, 121, 236, 0.88);
     display: flex;
     justify-content: center;
     align-items: center;

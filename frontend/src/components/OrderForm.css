@@ -10,12 +10,14 @@
 .inputField {
     width: 100%;
     padding: 0.8rem;
-    border: 0.1rem solid #242424;
+    box-shadow: 1rem 1rem 0.5rem 0.2rem rgba(0, 0, 0, 0.1);
     border-radius: 0.4rem;
     font-size: 1.6rem;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    background: rgba(38, 121, 236, 0.88);
+    color: white;
 }
 
 .label {
@@ -33,15 +35,18 @@
 button {
     border: none;
     background-color: transparent;
-    color: black;
+    color: #fff;
     cursor: pointer;
     margin: 0;
     padding: 0;
 }
+button:active {
+    transform: scale(1.2);
+}
 
 .orderButton {
     padding: 0.8rem;
-    background-color: #242424;
+    background-color: rgba(38, 121, 236, 0.88);
     color: white;
     border: none;
     border-radius: 0.4rem;
@@ -50,9 +55,10 @@ button {
     width: 100%;
 }
     .orderButton:hover {
-        background-color: #000000;
+        background-color: rgba(38, 121, 236, 1);
     }
 
     .orderButton:active {
-        background-color: #303030;
+        background-color: rgba(38, 121, 236, 1);
+        transform: scale(1.1);
     }

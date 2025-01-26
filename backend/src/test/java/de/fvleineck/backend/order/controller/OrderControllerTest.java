@@ -29,7 +29,7 @@ class OrderControllerTest {
 				.contentType(MediaType.APPLICATION_JSON)
 				.content("""
 												{
-													"id": "0001-20241222",
+													"id": "0001-20250418",
 													"lastname": "Mustermann",
 													"firstname": "Max",
 													"email": "fabian@doez.info",
@@ -44,7 +44,7 @@ class OrderControllerTest {
 				.andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(MockMvcResultMatchers.content().json("""
 											{
-												"id": "0001-20241222",
+												"id": "0001-20250418",
 												"lastname": "Mustermann",
 												"firstname": "Max",
 												"email": "fabian@doez.info",
