@@ -115,8 +115,8 @@ export default function OrderForm() {
 					<label className="label" htmlFor="pickupPlace">Abholort:*</label>
 					<select id="pickupPlace" required value={pickupPlace}
 					        onChange={(e) => setPickupPlace(e.target.value)}>
-						<option value="">Bitte wählen</option>
-						<option value="Weinstadt (Tanja & Ralph)">Weinstadt (Tanja & Ralph)</option>
+						{/*<option value="">Bitte wählen</option>
+						<option value="Weinstadt (Tanja & Ralph)">Weinstadt (Tanja & Ralph)</option>*/}
 						<option value="Vereinsheim am Leinecksee">Vereinsheim am Leinecksee</option>
 					</select>
 				</div>

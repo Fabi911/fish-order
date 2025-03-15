@@ -1,5 +1,5 @@
 import './App.css';
-/*import OrderPage from "./pages/OrderPage.tsx";*/
+import OrderPage from "./pages/OrderPage.tsx";
 import OrderOverviewPage from "./pages/OrderOverviewPage.tsx";
 import {Link, Route, Routes, useNavigate} from "react-router-dom";
 import EditPage from "./pages/EditPage.tsx";
@@ -9,7 +9,6 @@ import {AppUser} from "./types/AppUser.ts";
 import LoginPage from "./pages/LoginPage.tsx";
 import RegisterPage from "./pages/RegisterPage.tsx";
 import {Slide, ToastContainer} from "react-toastify";
-import OutOfOrder from "./pages/outOfOrder.tsx";
 
 function App() {
 	const [appUser, setAppUser] = useState<AppUser | null>(null);
@@ -83,7 +82,7 @@ function App() {
 			{appUser && <button className="logout-button" onClick={logout}>Logout</button>}
 			</div>
 			<Routes>
-				<Route path="/" element={<OutOfOrder/>}/> {/* für Bestellprozess auf OrderPage umstellen*/}
+				<Route path="/" element={<OrderPage/>}/> {/* für Bestellprozess auf OrderPage umstellen*/}
 				<Route path="/login" element={<LoginPage login={login}/>}/> {/* für Bestellprozess path="/login" */}
 				<Route path="/register" element={<RegisterPage/>}/>
 				{appUser && isAuthorizedAdminGroup && (
