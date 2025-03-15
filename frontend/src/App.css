@@ -1,0 +1,24 @@
+#root {
+  margin: 0 auto 10rem auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.linkBox {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-start;
+  margin: 0;
+  font-size: 1.6rem;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  gap: 1rem;
+}
