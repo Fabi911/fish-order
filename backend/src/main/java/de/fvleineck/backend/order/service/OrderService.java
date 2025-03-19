@@ -57,7 +57,7 @@ public class OrderService {
 	public Order updateOrder(String id, Order updatedOrder) {
 		Order existingOrder = orderRepository.findById(id).orElseThrow(() -> new OrderNotFoundException(id));
 		Order editedOrder = new Order(
-				id, // Keep the same id
+				id,
 				updatedOrder.lastname() != null ? updatedOrder.lastname() : existingOrder.lastname(),
 				updatedOrder.firstname() != null ? updatedOrder.firstname() : existingOrder.firstname(),
 				updatedOrder.email() != null ? updatedOrder.email() : existingOrder.email(),
@@ -79,7 +79,7 @@ public class OrderService {
 				.append(order.firstname())
 				.append(" ")
 				.append(order.lastname())
-				.append("!<br><br>") // Use <br> for line breaks
+				.append("!<br><br>")
 				.append("Bestelldetails:<br>")
 				.append("Verkaufsdatum: Karfreitag, 18.04.2025<br>")
 				.append("Bestellnummer: ")

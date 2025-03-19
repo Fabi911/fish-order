@@ -13,7 +13,7 @@ export default function OrderForm() {
 	const [phone, setPhone] = useState<string>('')
 	const [quantitySmoked, setQuantitySmoked] = useState<number>(0)
 	const [quantityFresh, setQuantityFresh] = useState<number>(0)
-	const [pickupPlace, setPickupPlace] = useState<string>('')
+	const [pickupPlace, setPickupPlace] = useState<string>('Vereinsheim am Leinecksee') // bei meheren wieder löschen
 	const [comment, setComment] = useState<string>('')
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -111,15 +111,15 @@ export default function OrderForm() {
 							fontSize="large"/></button>
 					</div>
 				</div>
-				<div className="inputField">
+				{/*<div className="inputField">
 					<label className="label" htmlFor="pickupPlace">Abholort:*</label>
-					<select id="pickupPlace" required value={pickupPlace}
+					<select id="pickupPlace" value={pickupPlace}
 					        onChange={(e) => setPickupPlace(e.target.value)}>
-						{/*<option value="">Bitte wählen</option>
-						<option value="Weinstadt (Tanja & Ralph)">Weinstadt (Tanja & Ralph)</option>*/}
+						<option value="">Bitte wählen</option>
+						<option value="Weinstadt (Tanja & Ralph)">Weinstadt (Tanja & Ralph)</option>
 						<option value="Vereinsheim am Leinecksee">Vereinsheim am Leinecksee</option>
 					</select>
-				</div>
+				</div>*/}
 				<div className="inputField">
 					<label className="label" htmlFor="comment">Kommentar:</label>
 					<textarea id="comment" placeholder="Kommentar" value={comment}
