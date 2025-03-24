@@ -53,7 +53,7 @@ export default function OrderForm() {
 				setLastname('');
 				setEmail('');
 				setPhone('');
-				setPickupPlace('');
+				setPickupPlace('Vereinsheim am Leinecksee');
 				setComment('');
 				setQuantitySmoked(0);
 				setQuantityFresh(0);
