@@ -103,7 +103,14 @@ public class OrderService {
 				.append("Kommentar: ")
 				.append(order.comment())
 				.append("<br><br>")
-				.append("freundlichste Grüße,<br><br> Fischerei- und Hegeverein Leineck e.V.");
+				.append("freundlichste Grüße,<br><br> Fischerei- und Hegeverein Leineck e.V.")
+				.append("<br><br><br>")
+				.append("Diese E-Mail wurde automatisch generiert. Es können keine neue Bestellungen über diese " +
+						"Mailadresse aufgegeben werden.")
+				.append("<br>")
+				.append("Bitte nur auf diese E-Mail antworten, wenn Sie eine Änderung Ihrer Bestellung vornehmen " +
+						"möchten.");
+
 		String text = textBuilder.toString();
 		try {
 			emailService.sendOrderConfirmation(order.email(), subject, text);
