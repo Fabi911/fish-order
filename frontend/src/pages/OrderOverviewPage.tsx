@@ -106,7 +106,7 @@ export default function OrderOverviewPage({appUser}: { appUser: AppUser }) {
 		{field: 'firstname', headerName: 'Vorname', width: 150},
 		{field: 'email', headerName: 'E-Mail', width: 250},
 		{field: 'phone', headerName: 'Telefonnummer', width: 200},
-		{field: 'pickupPlace', headerName: 'Abholort', width: 120},
+		/*{field: 'pickupPlace', headerName: 'Abholort', width: 120},*/
 		{field: 'comment', headerName: 'Kommentar', width: 200},
 		{field: 'quantitySmoked', headerName: 'Geräucherte', width: 100},
 		{field: 'quantityFresh', headerName: 'Eingelegte', width: 100},
