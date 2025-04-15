@@ -22,7 +22,7 @@ export default function LoginPage(porps: LoginPageProps) {
 				       onChange={(e) => setPassword(e.target.value)}/>
 				<button className="exportButton" type="submit">Login</button>
 			</Form>
-			<article> für Bestellprozess deaktivieren
+			<article> {/*für Bestellprozess deaktivieren*/}
 				<p>Vielen Dank für Ihre Bestellungen!<br/>
 				Es können keine weiteren Bestellungen mehr aufgenommen werden.</p>
 			<br/>
