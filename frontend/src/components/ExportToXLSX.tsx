@@ -19,7 +19,7 @@ export default function ExportToXLSX ({data, totalSmoked, totalFresh}: Props){
 			{header: 'Vorname', key: 'firstname', width: 20},
 			{header: 'E-Mail', key: 'email', width: 35},
 			{header: 'Telefonnummer', key: 'phone', width: 25},
-			{header: 'Abholort', key: 'pickupPlace', width: 20},
+			/*{header: 'Abholort', key: 'pickupPlace', width: 20},*/
 			{header: 'Kommentar', key: 'comment', width: 35},
 			{header: 'Geräucherte', key: 'quantitySmoked', width: 15},
 			{header: 'Eingelegte', key: 'quantityFresh', width: 15},
