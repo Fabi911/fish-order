@@ -114,7 +114,7 @@ export default function OrderOverviewPage({appUser}: { appUser: AppUser }) {
 			field: 'totalPrice',
 			headerName: 'Gesamtbetrag',
 			width: 150,
-			renderCell: (params: GridRenderCellParams) => (params.row.quantitySmoked * 8.5 + params.row.quantityFresh * 7).toFixed(2) + '€'
+			renderCell: (params: GridRenderCellParams) => (params.row.quantitySmoked * 7.5 + params.row.quantityFresh * 6).toFixed(2) + '€'
 		},
 		{
 			field: 'editRemove',
@@ -174,7 +174,7 @@ export default function OrderOverviewPage({appUser}: { appUser: AppUser }) {
 				<p>Gesamt: <b>{totalSmoked + totalFresh}</b></p>
 			</article>
 			<div className="searchContainer">
-				<Link className="exportButton link" to="/orderpage">zum Bestellformular</Link>
+				<Link className="exportButton link" to="/">zum Bestellformular</Link>
 				<input className="search" type="search" placeholder="Suche..."
 				       onChange={event => setSearch(event.target.value)}/>
 				<ExportToXLSX data={orders} totalSmoked={totalSmoked} totalFresh={totalFresh}/>
@@ -235,10 +235,10 @@ export default function OrderOverviewPage({appUser}: { appUser: AppUser }) {
 				}}
 			/>
 
-
+			<h3 className={"closedOrders"}>Abgeschlossene Bestellungen</h3>
 			{closedOrdersList.length > 0 &&
 				<>
-					<h3 className={"closedOrders"}>Abgeschlossene Bestellungen</h3>
+
 					<DataGrid
 						rows={closedOrders()}
 						columns={columns}

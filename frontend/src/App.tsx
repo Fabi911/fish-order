@@ -82,14 +82,14 @@ function App() {
 			{appUser && <button className="logout-button" onClick={logout}>Logout</button>}
 			</div>
 			<Routes>
-				<Route path="/orderpage" element={<OrderPage/>}/> {/* für Bestellprozess auf OrderPage umstellen*/}
-				<Route path="/" element={<LoginPage login={login}/>}/> {/* für Bestellprozess path="/login" */}
+				<Route path="/" element={<OrderPage/>}/> {/* für Bestellprozess auf OrderPage umstellen*/}
+				<Route path="/login" element={<LoginPage login={login}/>}/> {/* für Bestellprozess path="/login" */}
 				<Route path="/register" element={<RegisterPage/>}/>
 				{appUser && isAuthorizedAdminGroup && (
 					<>
 						<Route path="/order-overview" element={<OrderOverviewPage appUser={appUser}/>}/>
 						<Route path="/order-edit/:id" element={<EditPage/>}/>
-						<Route path="/orderpage" element={<OrderPage/>}/> {/* für Bestellprozess deaktivieren*/}
+						{/*<Route path="/orderpage" element={<OrderPage/>}/>*/} {/* für Bestellprozess deaktivieren*/}
 					</>
 				)}
 			</Routes>
