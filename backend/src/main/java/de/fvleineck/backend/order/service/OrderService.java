@@ -24,8 +24,8 @@ public class OrderService {
 	private String generateOrderId() {
 		orderCounter++;
 		String year = "2025";
-		String month = "04";
-		String day = "18";
+		String month = "06";
+		String day = "19";
 		return String.format("%04d", orderCounter) + "-" + year + month + day;
 	}
 
@@ -81,7 +81,7 @@ public class OrderService {
 				.append(order.lastname())
 				.append("!<br><br>")
 				.append("Bestelldetails:<br>")
-				.append("Verkaufsdatum: Karfreitag, 18.04.2025<br>")
+				.append("Verkaufsdatum: Fronleichnam, 19.06.2025<br>")
 				.append("Bestellnummer: ")
 				.append(order.id())
 				.append("<br><br>")
